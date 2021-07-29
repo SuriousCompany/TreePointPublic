@@ -3,6 +3,12 @@ plugins {
     id 'kotlin-android'
 }
 
+def cppFile = file("./src/main/cpp/config.cpp")
+
+if (!cppFile.exists()) {
+    throw new IllegalStateException("Missing /data/src/main/cpp/config.cpp. Please contact developer")
+}
+
 android {
     compileSdkVersion rootProject.ext.compile_sdk_version
 

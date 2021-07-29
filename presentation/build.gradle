@@ -15,7 +15,7 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(keystorePropertiesFile.newDataInputStream())
 } else {
-    throw new IllegalStateException("missing keystore.properties. Please contact developer")
+    throw new IllegalStateException("Missing keystore.properties. Please contact developer")
 }
 
 android {
@@ -36,7 +36,7 @@ android {
     signingConfigs {
         firebaseAppDistribution {
             try {
-                storeFile file("../firebaseDistributionKey.jks")
+                storeFile rootProject.file("firebaseDistributionKey.jks")
                 keyAlias "appDistributionKey"
                 storePassword keystoreProperties['FIREBASE_DISTRIBUTION_KEY_PASSWORD']
                 keyPassword keystoreProperties['FIREBASE_DISTRIBUTION_KEY_PASSWORD']
