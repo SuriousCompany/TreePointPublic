@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="treeTypesAdapter"
+            type="company.surious.treepoint.ui.common.fragments.create_tree_point.TreeTypeSpinnerAdapter" />
+
+        <variable
+            name="treeTypes"
+            type="androidx.lifecycle.LiveData&lt;java.util.List&lt;company.surious.domain.entities.TreeType>>" />
+
+        <variable
+            name="isLoading"
+            type="androidx.lifecycle.LiveData&lt;Boolean>" />
+
+        <variable
+            name="eventHandler"
+            type="company.surious.treepoint.ui.common.fragments.create_tree_point.CreateTreePointFragment.CreateTreePointFragmentEventHandler" />
+
+        <variable
+            name="fruitingRange"
+            type="androidx.lifecycle.LiveData&lt;kotlin.Pair&lt;Integer, Integer>>" />
+
+        <variable
+            name="comment"
+            type="androidx.lifecycle.MutableLiveData&lt;String>" />
+
+        <variable
+            name="canGoNext"
+            type="androidx.lifecycle.LiveData&lt;Boolean>" />
+
+        <import type="company.surious.domain.entities.TreeType" />
+
+        <import type="kotlin.Pair" />
+
+        <import type="company.surious.treepoint.ui.common.fragments.create_tree_point.FruitingRangeTextHelper" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.common.fragments.create_tree_point.CreateTreePointFragment">
+
+        <Spinner
+            android:id="@+id/treeTypesSpinner"
+            spinnerAdapter="@{treeTypesAdapter}"
+            spinnerData="@{treeTypes}"
+            spinnerSelectionListener="@{(treeType) -> eventHandler.onTreeTypeSelected((TreeType) treeType)}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@color/lightGreen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_height="48dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/selectFruitingSeasonCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="32dp"
+            android:onClick="@{()->eventHandler.onSelectFruitingSeasonClicked()}"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/treeTypesSpinner">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:text="@{FruitingRangeTextHelper.INSTANCE.getFruitingRangeText(context, fruitingRange)}"
+                android:textColor="@{fruitingRange != null ? @color/green_500 : @color/red}"
+                android:textSize="24sp"
+                tools:text="@string/select_fruiting_season"
+                tools:textColor="@color/red" />
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:hint="@string/comment"
+            android:textColorHint="@color/gray"
+            app:layout_constraintBottom_toTopOf="@id/createTreePointButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selectFruitingSeasonCard">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|start"
+                android:text="@={comment}"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/createTreePointButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@{canGoNext ? @color/green_A700 : @color/light_gray}"
+            android:enabled="@{canGoNext}"
+            android:onClick="@{()->eventHandler.onCreateTreePointButtonClicked()}"
+            android:text="@string/create_tree_point"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

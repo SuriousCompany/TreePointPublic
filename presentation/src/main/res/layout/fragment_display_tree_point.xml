@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="treePoint"
+            type="androidx.lifecycle.LiveData&lt;company.surious.domain.entities.TreePoint>" />
+
+        <import type="company.surious.treepoint.ui.common.fragments.create_tree_point.FruitingRangeTextHelper" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="16dp"
+        tools:context=".ui.common.fragments.DisplayTreePointFragment">
+
+        <ImageView
+            android:id="@+id/displayTreeTypeIcon"
+            android:layout_width="@dimen/tree_type_icon_size"
+            android:layout_height="@dimen/tree_type_icon_size"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_apple"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/treeTypeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@{treePoint.type.typeName}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/tree_type_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/displayTreeTypeIcon"
+            tools:text="Apple tree" />
+
+        <TextView
+            android:id="@+id/displayFruitingTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:ellipsize="none"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@{FruitingRangeTextHelper.INSTANCE.getFruitingRangeText(context, treePoint.ripeStartMonth, treePoint.ripeEndMonth)}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/treeTypeTextView"
+            tools:text="@string/select_fruiting_season"
+            tools:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/creatorNameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/creator"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/displayFruitingTextView" />
+
+        <TextView
+            android:id="@+id/creatorNameTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{treePoint.creatorName}"
+            android:textColor="@color/green_900"
+            android:textSize="18sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/creatorNameLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/creatorNameLabel"
+            tools:text="hornet" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{treePoint.creatorComment}"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/creatorNameTextView"
+            tools:text="Some\nmultiline\ntext" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

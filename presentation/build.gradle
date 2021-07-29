@@ -1,0 +1,89 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(keystorePropertiesFile.newDataInputStream())
+} else {
+    throw new IllegalStateException("missing keystore.properties. Please contact developer")
+}
+
+android {
+    compileSdkVersion rootProject.ext.compile_sdk_version
+
+    defaultConfig {
+        applicationId "company.surious.treepoint"
+        minSdkVersion rootProject.ext.min_sdk_version
+        targetSdkVersion rootProject.ext.target_sdk_version
+        versionCode rootProject.ext.version_code
+        versionName rootProject.ext.version_name
+
+        manifestPlaceholders = [mapsApiKey: keystoreProperties.getProperty("MAPS_API_KEY", "")]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        firebaseAppDistribution {
+            try {
+                storeFile file("../firebaseDistributionKey.jks")
+                keyAlias "appDistributionKey"
+                storePassword keystoreProperties['FIREBASE_DISTRIBUTION_KEY_PASSWORD']
+                keyPassword keystoreProperties['FIREBASE_DISTRIBUTION_KEY_PASSWORD']
+            }
+            catch (ignored) {
+                throw new InvalidUserDataException("Define FIREBASE_DISTRIBUTION_KEY_PASSWORD in keystore.properties before building firebaseAppDistribution variant.")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        firebaseAppDistribution {
+            signingConfig android.signingConfigs.firebaseAppDistribution
+            debuggable true
+            minifyEnabled false
+            matchingFallbacks = ['debug']
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${rootProject.name}-${variant.buildType.name}-${variant.versionName}.apk"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation project(path: ':domain')
+    implementation project(path: ':data')
+    implementation presentationCore
+    implementation presentationViews
+    implementation presentationNavigation
+    implementation presentationPlayServices
+}

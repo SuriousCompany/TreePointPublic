@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title1">24sp</dimen>
+
+    <dimen name="tree_type_icon_size">48dp</dimen>
+    <dimen name="tree_type_text_size">18sp</dimen>
+</resources>

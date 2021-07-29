@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">TreePoint</string>
+    <string name="login">Login</string>
+    <string name="login_with_google">Login with Google</string>
+    <string name="unexpected_error">Unexpected error</string>
+    <string name="oops_message">Oops, something went wrong…</string>
+    <string name="sorry_message">We are deeply sorry. Error report sent automatically, it will be fixed as soon as we can.</string>
+    <string name="sad_tree">Sad tree</string>
+    <string name="please_restart_application_and_try_again">Please restart application and try again</string>
+    <string name="attribution">Tree, sapling, apple icons made by Freepik(https://www.freepik.comfrom) from Flaticon(https://www.flaticon.com)</string>
+    <string name="forest">forest</string>
+    <string name="username_hint">username…</string>
+    <string name="username">Username</string>
+    <string name="pick_a_username">Pick a username</string>
+    <string name="your_username_will_be_public_for_all_users_to_see">Your username will be public for all users to see</string>
+    <string name="register">Register</string>
+    <string name="username_exists">Sorry, that username already exists</string>
+    <string name="sapling">sapling</string>
+    <string name="invalid_username">Username must contain 6–18 letter/number character</string>
+    <string name="select_the_fruiting_period">Select the fruiting period</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="fruition_single_month">Fruition in %s</string>
+    <string name="fruition_months_range">Fruition in %s - %s</string>
+    <string name="select_fruiting_season">Select fruiting season</string>
+    <string name="comment">Comment</string>
+    <string name="create_tree_point">create TreePoint</string>
+
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string name="creator">Creator:</string>
+    <string name="fruiting_season">Fruiting season:</string>
+
+</resources>

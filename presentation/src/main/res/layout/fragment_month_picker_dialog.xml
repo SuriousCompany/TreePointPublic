@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="eventHandler"
+            type="company.surious.treepoint.ui.common.fragments.dialogs.month_picker.MonthPickerDialogFragment.MonthPickerDialogEventHandler" />
+
+        <variable
+            name="adapter"
+            type="company.surious.treepoint.ui.common.fragments.dialogs.month_picker.SelectableMonthAdapter" />
+
+        <variable
+            name="layoutManager"
+            type="androidx.recyclerview.widget.RecyclerView.LayoutManager" />
+
+        <variable
+            name="monthData"
+            type="androidx.lifecycle.LiveData&lt;java.util.List&lt;company.surious.treepoint.ui.common.fragments.dialogs.month_picker.SelectableMonth>>" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="16dp"
+        tools:context=".ui.common.fragments.dialogs.month_picker.MonthPickerDialogFragment">
+
+        <TextView
+            android:id="@+id/selectFruitingPeriodLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_the_fruiting_period"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/monthPickerTitleDivider"
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_marginTop="8dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selectFruitingPeriodLabel" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/monthsRecyclerView"
+            recyclerAdapter="@{adapter}"
+            recyclerData="@{monthData}"
+            recyclerEventHandler="@{eventHandler}"
+            recyclerLayoutManager="@{layoutManager}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:overScrollMode="never"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monthPickerTitleDivider" />
+
+        <Button
+            android:id="@+id/monthDialogCancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/yellow_A700"
+            android:onClick="@{()->eventHandler.onCancelButtonClicked()}"
+            android:text="@string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/monthDialogOkButton"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monthsRecyclerView" />
+
+        <Button
+            android:id="@+id/monthDialogOkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/green_A700"
+            android:onClick="@{()->eventHandler.onOkButtonClicked()}"
+            android:text="@string/ok"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monthsRecyclerView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

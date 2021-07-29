@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainNavigation"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="company.surious.treepoint.ui.auth.AuthFragment"
+        android:label="AuthFragment"
+        tools:layout="@layout/fragment_auth">
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="registeredUser"
+            android:defaultValue="@null"
+            app:argType="company.surious.domain.entities.RegisteredUser"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_mainFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="company.surious.treepoint.ui.common.fragments.auth.LoginFragment"
+        tools:layout="@layout/fragment_login"
+        android:label="GoogleLoginFragment">
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="company.surious.treepoint.ui.common.fragments.auth.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration">
+        <argument
+            android:name="loggedInUser"
+            android:defaultValue="@null"
+            app:argType="company.surious.domain.entities.LoggedInUser"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_registrationFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/errorFragment"
+        android:name="company.surious.treepoint.ui.common.fragments.ErrorFragment"
+        android:label="fragment_blank"
+        tools:layout="@layout/fragment_error" />
+    <action
+        android:id="@+id/action_global_errorFragment"
+        app:destination="@id/errorFragment"
+        app:popUpTo="@id/mainFragment"
+        app:popUpToInclusive="true" />
+</navigation>

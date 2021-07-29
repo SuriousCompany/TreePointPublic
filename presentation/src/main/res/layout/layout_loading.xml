@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="visible"
+            type="Boolean" />
+
+        <variable
+            name="backgroundColor"
+            type="Integer" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        setVisibilityWithGone="@{visible}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@{backgroundColor != null ? backgroundColor : @color/transparentBlack}"
+        android:clickable="true"
+        android:elevation="3dp"
+        android:focusable="true">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+</layout>

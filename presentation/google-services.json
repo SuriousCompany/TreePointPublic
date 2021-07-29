@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "757653566248",
+    "project_id": "treepoint-65997",
+    "storage_bucket": "treepoint-65997.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757653566248:android:a828afc4f917abe545161d",
+        "android_client_info": {
+          "package_name": "company.surious.treepoint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757653566248-fbmnpfstm6hnd28u9s9gjbb6dl30bg82.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "company.surious.treepoint",
+            "certificate_hash": "3c358fd329bab7e160b852d0cb493d1293f78d8f"
+          }
+        },
+        {
+          "client_id": "757653566248-foqdd40f7rl16hemb5s7v1rbb2u2d34p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "company.surious.treepoint",
+            "certificate_hash": "e5969b3ab75056f8bbae90a11adb6ac10bd093ad"
+          }
+        },
+        {
+          "client_id": "757653566248-sqr0e0c0ehj35u996fgjrp87dm8fh7dj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2G2t-bAf8OxtMIVMgNZUeqMNapIm0UKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757653566248-sqr0e0c0ehj35u996fgjrp87dm8fh7dj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

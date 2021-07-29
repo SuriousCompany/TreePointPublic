@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="username"
+            type="androidx.lifecycle.MutableLiveData&lt;String>" />
+
+        <variable
+            name="eventHandler"
+            type="company.surious.treepoint.ui.common.fragments.auth.RegistrationFragment.RegistrationFragmentEventHandler" />
+
+        <variable
+            name="errorText"
+            type="androidx.lifecycle.LiveData&lt;String>" />
+
+        <variable
+            name="isLoading"
+            type="androidx.lifecycle.LiveData&lt;Boolean>" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.common.fragments.auth.RegistrationFragment">
+
+        <include
+            layout="@layout/layout_loading"
+            tools:visibility="invisible"
+            app:visible="@{isLoading}" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/topGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <ImageView
+            android:id="@+id/saplingImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/sapling"
+            app:layout_constraintEnd_toEndOf="@id/endGuideline"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@id/topGuideline"
+            app:srcCompat="@drawable/ic_sapling" />
+
+        <TextView
+            android:id="@+id/pickUserNameLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/pick_a_username"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/endGuideline"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@id/saplingImageView"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <TextView
+            android:id="@+id/yourUsernameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/your_username_will_be_public_for_all_users_to_see"
+            android:textColor="@color/gray"
+            app:layout_constraintEnd_toEndOf="@id/endGuideline"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@id/pickUserNameLabel" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userNameTextInput"
+            errorText="@{errorText}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/username"
+            android:textColorHint="@color/gray"
+            app:counterEnabled="true"
+            app:counterMaxLength="18"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/red"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/yourUsernameLabel"
+            app:layout_constraintStart_toStartOf="@id/yourUsernameLabel"
+            app:layout_constraintTop_toBottomOf="@id/yourUsernameLabel"
+            app:layout_constraintVertical_bias="0.2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={username}"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="@{()->eventHandler.onRegisterButtonClicked()}"
+            android:text="@string/register"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/endGuideline"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@id/userNameTextInput"
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_goneMarginTop="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

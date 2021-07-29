@@ -1,0 +1,34 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    apply from: "$project.rootDir/domain/dependencies.gradle"
+    apply from: "$project.rootDir/presentation/dependencies.gradle"
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.8'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
+    }
+}
+
+apply from: "$project.rootDir/domain/dependencies.gradle"
+apply from: "$project.rootDir/data/dependencies.gradle"
+apply from: "$project.rootDir/presentation/dependencies.gradle"
+apply from: "$project.rootDir/version.gradle"
+
+ext {
+    compile_sdk_version = 30
+    min_sdk_version = 21
+    target_sdk_version = 30
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
