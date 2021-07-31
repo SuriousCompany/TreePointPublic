@@ -10,5 +10,10 @@ data class FirestoreTreePoint(
     var ripeStartMonth: Int = -1,
     var ripeEndMonth: Int = -1,
     var creatorComment: String = "",
-    var typeId: String = ""
+    var typeId: String = "",
+    var isVerified: Boolean = false,
+    var verifiedBy: String? = null,
+    var creationDate: Long = -1,
+    var updateDate: Long = -1,
+    var verificationDate: Long = -1
 )

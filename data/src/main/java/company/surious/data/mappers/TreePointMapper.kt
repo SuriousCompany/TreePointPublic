@@ -17,7 +17,12 @@ object TreePointMapper : Mapper<FirestoreTreePoint, TreePoint> {
                 ripeStartMonth,
                 ripeEndMonth,
                 creatorComment,
-                TreeType(typeId)
+                TreeType(typeId),
+                isVerified,
+                verifiedBy,
+                creationDate,
+                updateDate,
+                verificationDate
             )
         }
 
@@ -31,7 +36,12 @@ object TreePointMapper : Mapper<FirestoreTreePoint, TreePoint> {
                 ripeStartMonth,
                 ripeEndMonth,
                 creatorComment,
-                type.id
+                type.id,
+                isVerified,
+                verifiedBy,
+                creationDate,
+                updateDate,
+                verificationDate
             )
         }
 }

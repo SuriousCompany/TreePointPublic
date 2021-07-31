@@ -14,5 +14,10 @@ data class TreePoint(
     var ripeStartMonth: Int = -1,
     var ripeEndMonth: Int = -1,
     var creatorComment: String = "",
-    var type: TreeType = TreeType()
+    var type: TreeType = TreeType(),
+    var isVerified: Boolean = false,
+    var verifiedBy: String? = null,
+    var creationDate: Long = -1,
+    var updateDate: Long = -1,
+    var verificationDate: Long = -1
 ) : Parcelable, Identifiable<String>

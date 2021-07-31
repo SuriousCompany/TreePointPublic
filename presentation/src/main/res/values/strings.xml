@@ -25,6 +25,11 @@
     <string name="select_fruiting_season">Select fruiting season</string>
     <string name="comment">Comment</string>
     <string name="create_tree_point">create TreePoint</string>
+    <string name="creator">Creator:</string>
+    <string name="fruiting_season">Fruiting season:</string>
+    <string name="verifiedLabel">Verified:</string>
+    <string name="verified">verified</string>
+    <string name="not_verified">not verified</string>
 
     <string-array name="months">
         <item>January</item>
@@ -40,8 +45,5 @@
         <item>November</item>
         <item>December</item>
     </string-array>
-
-    <string name="creator">Creator:</string>
-    <string name="fruiting_season">Fruiting season:</string>
 
 </resources>

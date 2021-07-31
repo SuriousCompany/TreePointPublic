@@ -29,6 +29,7 @@ class CreateTreePointUseCase(
 
     private fun createTreePoint(registeredUser: RegisteredUser, treePointDraft: TreePointDraft) =
         with(treePointDraft) {
+            val creationTime = System.currentTimeMillis()
             TreePoint(
                 "",
                 lat,
@@ -38,7 +39,12 @@ class CreateTreePointUseCase(
                 ripeStartMonth,
                 ripeEndMonth,
                 creatorComment,
-                type
+                type,
+                false,
+                null,
+                creationTime,
+                creationTime,
+                -1
             )
         }
 }
