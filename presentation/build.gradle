@@ -36,7 +36,7 @@ android {
     signingConfigs {
         firebaseAppDistribution {
             try {
-                storeFile rootProject.file("distributionKey.jks")
+                storeFile rootProject.file("debugKey.jks")
                 keyAlias "appDistributionKey"
                 storePassword keystoreProperties['FIREBASE_DISTRIBUTION_KEY_PASSWORD']
                 keyPassword keystoreProperties['FIREBASE_DISTRIBUTION_KEY_PASSWORD']
