@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.MainNavigationDirections
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentLoginBinding
-import company.surious.treepoint.ui.common.fragments.base.NavigationFragment
 import company.surious.treepoint.ui.common.models.navigation.ErrorNavigationDirection
 import company.surious.treepoint.ui.common.models.navigation.LoginNavigationDirection
 import company.surious.treepoint.ui.common.models.navigation.MainNavigationDirection
@@ -19,8 +20,7 @@ import company.surious.treepoint.ui.common.models.navigation.RegistrationNavigat
 import company.surious.treepoint.ui.common.view_models.LoginViewModel
 import org.koin.android.ext.android.inject
 
-
-class LoginFragment(override val navigationTag: String = "Login") : NavigationFragment() {
+class LoginFragment : Fragment() {
 
     private val loginViewModel: LoginViewModel by inject()
 
@@ -45,6 +45,11 @@ class LoginFragment(override val navigationTag: String = "Login") : NavigationFr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLoginNavigationSource()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logNavigation()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

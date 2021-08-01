@@ -5,19 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.MainNavigationDirections
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentRegistrationBinding
-import company.surious.treepoint.ui.common.fragments.base.NavigationFragment
 import company.surious.treepoint.ui.common.models.navigation.ErrorNavigationDirection
 import company.surious.treepoint.ui.common.models.navigation.MainNavigationDirection
 import company.surious.treepoint.ui.common.view_models.RegistrationViewModel
 import org.koin.android.ext.android.inject
 
 
-class RegistrationFragment(override val navigationTag: String = "Registration") :
-    NavigationFragment() {
+class RegistrationFragment : Fragment() {
 
     private val registrationViewModel: RegistrationViewModel by inject()
 
@@ -38,6 +38,11 @@ class RegistrationFragment(override val navigationTag: String = "Registration") 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeNavigationSource()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logNavigation()
     }
 
     private fun observeNavigationSource() {

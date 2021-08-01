@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
 import company.surious.domain.entities.RegisteredUser
+import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.R
 import company.surious.treepoint.ui.auth.AuthActivity
 import company.surious.treepoint.ui.common.fragments.LoadingFragmentDirections
@@ -31,6 +32,18 @@ class MainActivity : FragmentActivity() {
         checkStartData()
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (goToMapFragmentOnStart) {
+            findNavController(R.id.mainHostFragment).navigate(LoadingFragmentDirections.actionLoadingFragmentToTreeMapFragment())
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logNavigation()
+    }
+
     private fun checkStartData() {
         if (intent != null) {
             val registeredUser = intent.getParcelableExtra<RegisteredUser>(USER_KEY)
@@ -42,13 +55,6 @@ class MainActivity : FragmentActivity() {
             }
         } else {
             startAuthActivity()
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (goToMapFragmentOnStart) {
-            findNavController(R.id.mainHostFragment).navigate(LoadingFragmentDirections.actionLoadingFragmentToTreeMapFragment())
         }
     }
 

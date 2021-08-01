@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.navArgs
 import company.surious.domain.entities.TreePoint
+import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentDisplayTreePointBinding
 
@@ -36,6 +37,11 @@ class DisplayTreePointFragment : DialogFragment() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logNavigation()
     }
 
     private fun initBinding(binding: FragmentDisplayTreePointBinding) {

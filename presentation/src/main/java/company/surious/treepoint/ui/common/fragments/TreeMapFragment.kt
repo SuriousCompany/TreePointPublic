@@ -21,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.*
 import company.surious.domain.entities.TreePoint
+import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentTreeMapBinding
 import company.surious.treepoint.ui.common.fragments.base.BaseMapFragment
@@ -28,7 +29,7 @@ import company.surious.treepoint.ui.common.view_models.tree_point.AllTreePointsV
 import org.koin.android.ext.android.inject
 
 
-class TreeMapFragment(override val navigationTag: String = "TreeMap") : BaseMapFragment() {
+class TreeMapFragment : BaseMapFragment() {
 
     private val permission = Manifest.permission.ACCESS_FINE_LOCATION
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -71,6 +72,11 @@ class TreeMapFragment(override val navigationTag: String = "TreeMap") : BaseMapF
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
         checkPermission()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logNavigation()
     }
 
     private fun onMarkerClicked(marker: Marker): Boolean {

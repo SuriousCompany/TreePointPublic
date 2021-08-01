@@ -6,14 +6,12 @@ import timber.log.Timber
 
 object CrashlyticsLoggingTree : Timber.Tree() {
 
-    private val ERROR_DESCRIPTION = "Error description"
-
     /**
      * @param priority:
      *                  Log.VERBOSE - log to firebase
      *                  Log.DEBUG - create exception and record it to firebase
      *                  Log.INFO - set custom key tag-message
-     *                  Log.ERROR - set custom key ERROR_DESCRITPION-message
+     *                  Log.ERROR - record exception to firebase
      * @param tag
      * @param message
      * @param error
@@ -25,8 +23,8 @@ object CrashlyticsLoggingTree : Timber.Tree() {
                 .recordException(DebugLogException("$tag: $message"))
             Log.INFO -> FirebaseCrashlytics.getInstance().setCustomKey(tag!!, message)
             Log.ERROR -> {
-                val checkedError = error ?: DebugLogException("$tag: $message")
-                FirebaseCrashlytics.getInstance().recordException(checkedError)
+                FirebaseCrashlytics.getInstance()
+                    .recordException(UnhandledException(message, error))
             }
         }
     }

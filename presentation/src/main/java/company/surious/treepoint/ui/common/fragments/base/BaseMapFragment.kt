@@ -2,10 +2,11 @@ package company.surious.treepoint.ui.common.fragments.base
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 
-abstract class BaseMapFragment : NavigationFragment() {
+abstract class BaseMapFragment : Fragment() {
 
     protected abstract val mapView: MapView
 

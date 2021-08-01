@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import company.surious.domain.entities.RegisteredUser
+import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.MainNavigationDirections
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentAuthBinding
-import company.surious.treepoint.ui.common.fragments.base.NavigationFragment
 import company.surious.treepoint.ui.common.models.navigation.ErrorNavigationDirection
 import company.surious.treepoint.ui.common.models.navigation.LoginNavigationDirection
 import company.surious.treepoint.ui.common.models.navigation.MainNavigationDirection
@@ -19,8 +20,9 @@ import company.surious.treepoint.ui.common.models.navigation.RegistrationNavigat
 import company.surious.treepoint.ui.common.view_models.CheckCurrentUserViewModel
 import company.surious.treepoint.ui.main.MainActivity
 import org.koin.android.ext.android.inject
+
 //TODO merge it with LoginFragment
-class AuthFragment(override val navigationTag: String = "Auth") : NavigationFragment() {
+class AuthFragment : Fragment() {
 
     private val checkCurrentUserViewModel: CheckCurrentUserViewModel by inject()
 
@@ -46,6 +48,11 @@ class AuthFragment(override val navigationTag: String = "Auth") : NavigationFrag
         super.onViewCreated(view, savedInstanceState)
         observeNavigationSource()
         checkCurrentUserViewModel.checkUser(args.registeredUser)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logNavigation()
     }
 
     private fun initBinding() {

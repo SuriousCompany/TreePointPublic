@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.R
 
 class ErrorFragment : Fragment() {
@@ -15,5 +16,10 @@ class ErrorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_error, container, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logNavigation()
     }
 }

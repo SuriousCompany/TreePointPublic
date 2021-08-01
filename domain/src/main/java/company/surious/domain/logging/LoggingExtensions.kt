@@ -1,19 +1,34 @@
 package company.surious.domain.logging
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import timber.log.Timber
 
-fun logV(tag: String, message: String) {
+/**
+ * log verbose, log crashlytics
+ */
+fun logVerbose(tag: String, message: String) {
     Timber.tag(tag).v(message)
 }
 
-fun logD(tag: String, message: String) {
-    Timber.tag(tag).d(message)
-}
-
-fun logI(tag: String, message: String) {
+/**
+ * log info, record crashlytics custom key
+ */
+fun logValue(tag: String, message: String) {
     Timber.tag(tag).i(message)
 }
 
+/**
+ * log error, record UnhandledException with message to crashlytics issue
+ */
+fun logUnhandledError(error: Throwable, message: String? = null) {
+    logE(LogTags.UNHANDLED, error, message)
+}
+
+/**
+ * log error, record UnhandledException with message to crashlytics issue
+ */
 fun logE(tag: String, error: Throwable, message: String? = null) {
     if (message != null) {
         Timber.tag(tag).e(error, message)
@@ -22,26 +37,37 @@ fun logE(tag: String, error: Throwable, message: String? = null) {
     }
 }
 
-fun logUnhandledError(error: Throwable, message: String? = null) {
-    logE(LogTags.UNHANDLED, error, message)
-}
-
-fun logE(error: Throwable, message: String) {
-    Timber.e(error, message)
-}
-
+/**
+ * log debug, create crashlytics issue
+ */
 fun logDebug(message: String) {
-    logD(LogTags.DEBUG, message)
+    Timber.tag(LogTags.DEBUG).d(message)
 }
 
-fun logNav(message: String) {
-    logV(LogTags.NAVIGATION, message)
-}
-
+/**
+ * log verbose, log crashlytics
+ */
 fun logFlow(message: String) {
-    logV(LogTags.FLOW, message)
+    logVerbose(LogTags.FLOW, message)
 }
 
-fun logValue(tag: String, message: String) {
-    logI(tag, message)
+/**
+ * log verbose, log crashlytics
+ */
+fun Fragment.logNavigation() {
+    logVerbose(LogTags.NAVIGATION, javaClass.simpleName)
+}
+
+/**
+ * log verbose, log crashlytics
+ */
+fun AppCompatActivity.logNavigation() {
+    logVerbose(LogTags.NAVIGATION, javaClass.simpleName)
+}
+
+/**
+ * log verbose, log crashlytics
+ */
+fun FragmentActivity.logNavigation() {
+    logVerbose(LogTags.NAVIGATION, javaClass.simpleName)
 }

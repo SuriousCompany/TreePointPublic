@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import company.surious.domain.logging.logDebug
+import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentMonthPickerDialogBinding
 import company.surious.treepoint.ui.common.binding.lists.range.RangeRecyclerViewEventHandler
@@ -48,6 +49,11 @@ class MonthPickerDialogFragment : DialogFragment() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logNavigation()
     }
 
     private fun initBinding() {

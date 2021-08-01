@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import company.surious.domain.entities.TreePointDraft
 import company.surious.domain.entities.TreeType
+import company.surious.domain.logging.logNavigation
 import company.surious.domain.use_case.tree_point.CreateTreePointUseCase
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentCreateTreePointBinding
@@ -28,7 +29,6 @@ class CreateTreePointFragment : Fragment() {
     private val canGoNext = MutableLiveData<Boolean>().apply { value = false }
 
     private val createTreePointUseCase: CreateTreePointUseCase by inject()
-
     private var selectedFruitionSeason: Pair<Int, Int>? = null
 
     private lateinit var binding: FragmentCreateTreePointBinding
@@ -52,6 +52,11 @@ class CreateTreePointFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         allTreeTypesViewModel.startObserving()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        logNavigation()
     }
 
     private fun listenForMonthRangePick(): LiveData<Pair<Int, Int>?> =
