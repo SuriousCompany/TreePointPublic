@@ -15,10 +15,12 @@ import company.surious.data.managers.GoogleLoginManager
 import company.surious.data.preferences.TreeSharedPreferences
 import company.surious.domain.managers.LoginManager
 import company.surious.domain.preferences.InnerPreferences
+import company.surious.domain.preferences.UserPreferences
 import company.surious.domain.repositories.CurrentUserRepository
 import company.surious.domain.repositories.TreePointRepository
 import company.surious.domain.repositories.TreeTypeRepository
 import company.surious.domain.repositories.UserNameRepository
+import org.koin.dsl.binds
 import org.koin.dsl.module
 
 object DataModules {
@@ -45,6 +47,9 @@ object DataModules {
     }
     val PREFERENCES = module {
         single<InnerPreferences> { TreeSharedPreferences(get()) }
+        single { TreeSharedPreferences(get()) }.binds(
+            arrayOf(InnerPreferences::class, UserPreferences::class)
+        )
     }
     val ALL = arrayOf(AUTH, FIREBASE, REPOSITORIES, PREFERENCES)
 }

@@ -1,4 +1,4 @@
-package company.surious.domain.use_case
+package company.surious.domain.use_case.auth
 
 import company.surious.domain.entities.RegisteredUser
 import company.surious.domain.managers.LoginManager

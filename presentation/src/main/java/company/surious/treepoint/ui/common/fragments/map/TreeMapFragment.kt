@@ -1,29 +1,33 @@
-package company.surious.treepoint.ui.common.fragments
+package company.surious.treepoint.ui.common.fragments.map
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
-import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.*
 import company.surious.domain.entities.TreePoint
 import company.surious.domain.logging.logNavigation
+import company.surious.domain.preferences.UserPreferences
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentTreeMapBinding
+import company.surious.treepoint.ui.common.extensions.getCurrentLocation
+import company.surious.treepoint.ui.common.extensions.toLatLng
+import company.surious.treepoint.ui.common.extensions.zoomToLocation
 import company.surious.treepoint.ui.common.fragments.base.BaseMapFragment
 import company.surious.treepoint.ui.common.view_models.tree_point.AllTreePointsViewModel
 import org.koin.android.ext.android.inject
@@ -32,12 +36,14 @@ import org.koin.android.ext.android.inject
 class TreeMapFragment : BaseMapFragment() {
 
     private val permission = Manifest.permission.ACCESS_FINE_LOCATION
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var binding: FragmentTreeMapBinding
-
+    private val userPreferences: UserPreferences by inject()
     private val allTreePointsViewModel: AllTreePointsViewModel by inject()
 
-    val requestPermissionLauncher =
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var binding: FragmentTreeMapBinding
+    private lateinit var location: Location
+
+    private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission())
         { isGranted: Boolean ->
             if (isGranted) {
@@ -106,7 +112,7 @@ class TreeMapFragment : BaseMapFragment() {
         requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
-    @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+    @SuppressLint("MissingPermission")
     private fun initMap(googleMap: GoogleMap) {
         googleMap.isMyLocationEnabled = true
         zoomToCurrentLocation(googleMap)
@@ -114,38 +120,12 @@ class TreeMapFragment : BaseMapFragment() {
         observeTreePoints(googleMap)
     }
 
-    private fun requestCurrentLocation(listener: (Double, Double) -> Unit) {
-        try {
-            val locationResult = fusedLocationProviderClient.lastLocation
-            locationResult.addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    val lastKnownLocation = task.result
-                    if (lastKnownLocation != null) {
-                        listener.invoke(
-                            lastKnownLocation.latitude,
-                            lastKnownLocation.longitude
-                        )
-                    }
-                } else {
-                    TODO()
-                    /*googleMap?.moveCamera(
-                            CameraUpdateFactory
-                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
-                        )
-                        map?.uiSettings?.isMyLocationButtonEnabled = false*/
-                }
-            }
-        } catch (e: SecurityException) {
-            TODO()
-            //Log.e("Exception: %s", e.message, e)
-        }
-    }
-
     private fun zoomToCurrentLocation(googleMap: GoogleMap) {
-        requestCurrentLocation { latitude, longitude ->
-            googleMap.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 20f)
-            )
+        fusedLocationProviderClient.getCurrentLocation(requireActivity()) { location ->
+            if (location != null) {
+                this.location = location
+                googleMap.zoomToLocation(location.toLatLng(), userPreferences.zoomValue)
+            }
         }
     }
 
@@ -189,14 +169,12 @@ class TreeMapFragment : BaseMapFragment() {
 
     inner class TreeMapEventHandler {
         fun onAddButtonClicked() {
-            requestCurrentLocation { latitude, longitude ->
-                val action =
-                    TreeMapFragmentDirections.actionTreeMapFragmentToCreateTreePointFragment(
-                        latitude.toFloat(),
-                        longitude.toFloat()
-                    )
-                findNavController().navigate(action)
-            }
+            val action =
+                TreeMapFragmentDirections.actionTreeMapFragmentToCreateTreePointFragment(
+                    location.latitude.toFloat(),
+                    location.longitude.toFloat()
+                )
+            findNavController().navigate(action)
         }
     }
 }

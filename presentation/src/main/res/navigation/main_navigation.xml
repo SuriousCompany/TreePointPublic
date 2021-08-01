@@ -17,7 +17,7 @@
         app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/treeMapFragment"
-        android:name="company.surious.treepoint.ui.common.fragments.TreeMapFragment"
+        android:name="company.surious.treepoint.ui.common.fragments.map.TreeMapFragment"
         android:label="TreeMapFragment"
         tools:layout="@layout/fragment_tree_map">
         <action

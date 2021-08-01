@@ -4,9 +4,9 @@ import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import company.surious.domain.entities.LoggedInUser
 import company.surious.domain.logging.logFlow
-import company.surious.domain.use_case.GetCurrentUserUseCase
-import company.surious.domain.use_case.GetLoginIntentUseCase
-import company.surious.domain.use_case.LoginUseCase
+import company.surious.domain.use_case.auth.GetCurrentUserUseCase
+import company.surious.domain.use_case.auth.GetLoginIntentUseCase
+import company.surious.domain.use_case.auth.LoginUseCase
 import company.surious.treepoint.ui.common.models.navigation.MainNavigationDirection
 import company.surious.treepoint.ui.common.models.navigation.RegistrationNavigationDirection
 import company.surious.treepoint.ui.common.view_models.base.NavigationViewModel

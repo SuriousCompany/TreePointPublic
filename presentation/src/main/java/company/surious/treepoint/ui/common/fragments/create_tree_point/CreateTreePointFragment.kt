@@ -1,35 +1,48 @@
 package company.surious.treepoint.ui.common.fragments.create_tree_point
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
 import company.surious.domain.entities.TreePointDraft
 import company.surious.domain.entities.TreeType
 import company.surious.domain.logging.logNavigation
+import company.surious.domain.preferences.UserPreferences
 import company.surious.domain.use_case.tree_point.CreateTreePointUseCase
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentCreateTreePointBinding
+import company.surious.treepoint.ui.common.extensions.addDraggableMarker
+import company.surious.treepoint.ui.common.extensions.zoomToLocation
+import company.surious.treepoint.ui.common.fragments.base.BaseMapFragment
 import company.surious.treepoint.ui.common.fragments.dialogs.month_picker.MonthPickerDialogFragment
 import company.surious.treepoint.ui.common.view_models.tree_type.AllTreeTypesViewModel
 import org.koin.android.ext.android.inject
 
-class CreateTreePointFragment : Fragment() {
+class CreateTreePointFragment : BaseMapFragment() {
 
     private val arguments: CreateTreePointFragmentArgs by navArgs()
     private val allTreeTypesViewModel: AllTreeTypesViewModel by inject()
     private val commentText = MutableLiveData<String>().apply { value = "" }
     private val draft = TreePointDraft()
     private val canGoNext = MutableLiveData<Boolean>().apply { value = false }
+    private val userPreferences: UserPreferences by inject()
 
+    //TODO remove it
     private val createTreePointUseCase: CreateTreePointUseCase by inject()
     private var selectedFruitionSeason: Pair<Int, Int>? = null
+
+    override val mapView: MapView
+        get() = binding.createTreePointMapView
 
     private lateinit var binding: FragmentCreateTreePointBinding
 
@@ -52,11 +65,26 @@ class CreateTreePointFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         allTreeTypesViewModel.startObserving()
+        getMapAsync(::initMap)
     }
 
     override fun onResume() {
         super.onResume()
         logNavigation()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun initMap(map: GoogleMap) {
+        val draftLocation = LatLng(draft.lat, draft.lng)
+        map.zoomToLocation(draftLocation, userPreferences.zoomValue)
+        map.isMyLocationEnabled = true
+        map.addDraggableMarker(
+            draftLocation,
+            BitmapDescriptorFactory.HUE_GREEN
+        ) { location ->
+            draft.lat = location.latitude
+            draft.lng = location.longitude
+        }
     }
 
     private fun listenForMonthRangePick(): LiveData<Pair<Int, Int>?> =

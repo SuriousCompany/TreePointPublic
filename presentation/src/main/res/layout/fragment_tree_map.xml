@@ -6,7 +6,7 @@
 
         <variable
             name="eventHandler"
-            type="company.surious.treepoint.ui.common.fragments.TreeMapFragment.TreeMapEventHandler" />
+            type="company.surious.treepoint.ui.common.fragments.map.TreeMapFragment.TreeMapEventHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

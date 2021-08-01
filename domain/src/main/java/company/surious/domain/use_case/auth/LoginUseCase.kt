@@ -1,4 +1,4 @@
-package company.surious.domain.use_case
+package company.surious.domain.use_case.auth
 
 import android.content.Intent
 import company.surious.domain.entities.LoggedInUser
