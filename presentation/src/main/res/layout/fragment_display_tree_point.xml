@@ -53,6 +53,7 @@
             android:ellipsize="none"
             android:gravity="center"
             android:singleLine="true"
+            setVisibilityWithGone="@{treePoint.hasRipeSeason}"
             android:text="@{FruitingRangeTextHelper.INSTANCE.getFruitingRangeText(context, treePoint.ripeStartMonth, treePoint.ripeEndMonth)}"
             android:textColor="@color/black"
             android:textSize="18sp"

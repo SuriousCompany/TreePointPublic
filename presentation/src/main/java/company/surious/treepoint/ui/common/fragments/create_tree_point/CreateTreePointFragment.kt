@@ -34,7 +34,6 @@ class CreateTreePointFragment : BaseMapFragment() {
     private val allTreeTypesViewModel: AllTreeTypesViewModel by inject()
     private val commentText = MutableLiveData<String>().apply { value = "" }
     private val draft = TreePointDraft()
-    private val canGoNext = MutableLiveData<Boolean>().apply { value = false }
     private val userPreferences: UserPreferences by inject()
 
     //TODO remove it
@@ -115,18 +114,12 @@ class CreateTreePointFragment : BaseMapFragment() {
             lifecycleOwner = viewLifecycleOwner
             eventHandler = CreateTreePointFragmentEventHandler()
             comment = commentText
-            canGoNext = this@CreateTreePointFragment.canGoNext
         }
     }
 
     private fun observeSelectedFruitionSeason(source: LiveData<Pair<Int, Int>?>) {
         source.observe(viewLifecycleOwner, {
             selectedFruitionSeason = it
-            canGoNext.value = selectedFruitionSeason?.let { checkedFruitingSeason ->
-                draft.ripeStartMonth = checkedFruitingSeason.first
-                draft.ripeEndMonth = checkedFruitingSeason.second
-                true
-            } ?: false
         })
     }
 

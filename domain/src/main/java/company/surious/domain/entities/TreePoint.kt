@@ -20,4 +20,8 @@ data class TreePoint(
     var creationDate: Long = -1,
     var updateDate: Long = -1,
     var verificationDate: Long = -1
-) : Parcelable, Identifiable<String>
+) : Parcelable, Identifiable<String> {
+
+    val hasRipeSeason: Boolean
+        get() = ripeStartMonth != -1 || ripeEndMonth != -1
+}
