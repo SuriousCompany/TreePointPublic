@@ -30,6 +30,7 @@
     <string name="verifiedLabel">Verified:</string>
     <string name="verified">verified</string>
     <string name="not_verified">not verified</string>
+    <string name="tree_point_created">TreePoint created</string>
 
     <string-array name="months">
         <item>January</item>

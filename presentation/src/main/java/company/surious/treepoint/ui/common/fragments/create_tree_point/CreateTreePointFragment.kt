@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,13 +19,13 @@ import company.surious.domain.entities.TreePointDraft
 import company.surious.domain.entities.TreeType
 import company.surious.domain.logging.logNavigation
 import company.surious.domain.preferences.UserPreferences
-import company.surious.domain.use_case.tree_point.CreateTreePointUseCase
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentCreateTreePointBinding
 import company.surious.treepoint.ui.common.extensions.addDraggableMarker
 import company.surious.treepoint.ui.common.extensions.zoomToLocation
 import company.surious.treepoint.ui.common.fragments.base.BaseMapFragment
 import company.surious.treepoint.ui.common.fragments.dialogs.month_picker.MonthPickerDialogFragment
+import company.surious.treepoint.ui.common.view_models.tree_point.CreateTreePointViewModel
 import company.surious.treepoint.ui.common.view_models.tree_type.AllTreeTypesViewModel
 import org.koin.android.ext.android.inject
 
@@ -37,7 +38,7 @@ class CreateTreePointFragment : BaseMapFragment() {
     private val userPreferences: UserPreferences by inject()
 
     //TODO remove it
-    private val createTreePointUseCase: CreateTreePointUseCase by inject()
+    private val createTreePointViewModel: CreateTreePointViewModel by inject()
     private var selectedFruitionSeason: Pair<Int, Int>? = null
 
     override val mapView: MapView
@@ -112,6 +113,7 @@ class CreateTreePointFragment : BaseMapFragment() {
             treeTypesAdapter = TreeTypeSpinnerAdapter(requireContext())
             treeTypes = allTreeTypesViewModel.treeTypes
             lifecycleOwner = viewLifecycleOwner
+            isLoading = createTreePointViewModel.isLoading
             eventHandler = CreateTreePointFragmentEventHandler()
             comment = commentText
         }
@@ -139,8 +141,23 @@ class CreateTreePointFragment : BaseMapFragment() {
         }
 
         fun onCreateTreePointButtonClicked() {
-            //TODO fixit
-            createTreePointUseCase.execute(draft).subscribe()
+            createTreePointViewModel.create(draft)
+            createTreePointViewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
+                if (!isLoading) {
+                    Toast.makeText(
+                        requireActivity(),
+                        getString(R.string.tree_point_created),
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    val action =
+                        CreateTreePointFragmentDirections.actionCreateTreePointFragmentToTreeMapFragment(
+                            draft.lat.toFloat(),
+                            draft.lng.toFloat()
+                        )
+                    findNavController().navigate(action)
+                }
+            })
         }
     }
 }

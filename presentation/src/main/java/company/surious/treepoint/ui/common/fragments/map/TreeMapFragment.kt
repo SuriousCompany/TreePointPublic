@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +14,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
@@ -38,10 +38,11 @@ class TreeMapFragment : BaseMapFragment() {
     private val permission = Manifest.permission.ACCESS_FINE_LOCATION
     private val userPreferences: UserPreferences by inject()
     private val allTreePointsViewModel: AllTreePointsViewModel by inject()
+    private val arguments: TreeMapFragmentArgs by navArgs()
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var binding: FragmentTreeMapBinding
-    private lateinit var location: Location
+    private lateinit var location: LatLng
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission())
@@ -115,7 +116,12 @@ class TreeMapFragment : BaseMapFragment() {
     @SuppressLint("MissingPermission")
     private fun initMap(googleMap: GoogleMap) {
         googleMap.isMyLocationEnabled = true
-        zoomToCurrentLocation(googleMap)
+        location = LatLng(arguments.latitude.toDouble(), arguments.longitude.toDouble())
+        if (location.latitude == -1.0 && location.longitude == -1.0) {
+            zoomToCurrentLocation(googleMap)
+        } else {
+            googleMap.zoomToLocation(location, userPreferences.zoomValue)
+        }
         googleMap.setOnMarkerClickListener(::onMarkerClicked)
         observeTreePoints(googleMap)
     }
@@ -123,7 +129,7 @@ class TreeMapFragment : BaseMapFragment() {
     private fun zoomToCurrentLocation(googleMap: GoogleMap) {
         fusedLocationProviderClient.getCurrentLocation(requireActivity()) { location ->
             if (location != null) {
-                this.location = location
+                this.location = location.toLatLng()
                 googleMap.zoomToLocation(location.toLatLng(), userPreferences.zoomValue)
             }
         }

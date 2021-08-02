@@ -5,6 +5,7 @@ import company.surious.treepoint.ui.common.view_models.CheckCurrentUserViewModel
 import company.surious.treepoint.ui.common.view_models.LoginViewModel
 import company.surious.treepoint.ui.common.view_models.RegistrationViewModel
 import company.surious.treepoint.ui.common.view_models.tree_point.AllTreePointsViewModel
+import company.surious.treepoint.ui.common.view_models.tree_point.CreateTreePointViewModel
 import company.surious.treepoint.ui.common.view_models.tree_point.TreePointViewModel
 import company.surious.treepoint.ui.common.view_models.tree_type.AllTreeTypesViewModel
 import company.surious.treepoint.ui.common.view_models.tree_type.TreeTypeViewModel
@@ -20,6 +21,7 @@ object PresentationModules {
         viewModel { AllTreeTypesViewModel(get(), get()) }
         viewModel { AllTreePointsViewModel(get(), get()) }
         viewModel { TreePointViewModel(get(), get()) }
+        viewModel { CreateTreePointViewModel(get()) }
     }
 
     val PROVIDERS = module {

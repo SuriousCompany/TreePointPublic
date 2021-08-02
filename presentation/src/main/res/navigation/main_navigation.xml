@@ -20,6 +20,14 @@
         android:name="company.surious.treepoint.ui.common.fragments.map.TreeMapFragment"
         android:label="TreeMapFragment"
         tools:layout="@layout/fragment_tree_map">
+        <argument
+            android:name="latitude"
+            android:defaultValue="-1"
+            app:argType="float" />
+        <argument
+            android:name="longitude"
+            android:defaultValue="-1"
+            app:argType="float" />
         <action
             android:id="@+id/action_treeMapFragment_to_createTreePointFragment"
             app:destination="@id/createTreePointFragment"
@@ -64,6 +72,11 @@
                 android:name="lastFruitingMonth"
                 android:defaultValue="-1" />
         </action>
+        <action
+            android:id="@+id/action_createTreePointFragment_to_treeMapFragment"
+            app:destination="@id/treeMapFragment"
+            app:popUpTo="@id/createTreePointFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <dialog
         android:id="@+id/monthPickerDialogFragment"
