@@ -13,8 +13,6 @@ import company.surious.treepoint.ui.common.fragments.LoadingFragmentDirections
 
 class MainActivity : FragmentActivity() {
 
-    private var goToMapFragmentOnStart = false
-
     companion object {
         private const val USER_KEY = "user"
 
@@ -32,13 +30,6 @@ class MainActivity : FragmentActivity() {
         checkStartData()
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (goToMapFragmentOnStart) {
-            findNavController(R.id.mainHostFragment).navigate(LoadingFragmentDirections.actionLoadingFragmentToTreeMapFragment())
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         logNavigation()
@@ -50,8 +41,8 @@ class MainActivity : FragmentActivity() {
             if (registeredUser == null) {
                 startAuthActivity()
             } else {
-                goToMapFragmentOnStart = true
                 setContentView(R.layout.activity_main)
+                findNavController(R.id.mainHostFragment).navigate(LoadingFragmentDirections.actionLoadingFragmentToTreeMapFragment())
             }
         } else {
             startAuthActivity()
