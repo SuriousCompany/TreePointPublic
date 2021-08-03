@@ -10,6 +10,7 @@
     <color name="light_gray">#ddd</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#C62828</color>
+    <color name="whiteGreen">#F6FDEB</color>
     <color name="lightGreen">#d2f0a2</color>
     <color name="yellow_A700">#FFD600</color>
     <color name="green_A700">#64DD17</color>

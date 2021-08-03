@@ -140,6 +140,12 @@ class CreateTreePointFragment : BaseMapFragment() {
             showMonthPicker()
         }
 
+        fun onPhotoClicked() {
+            val direction =
+                CreateTreePointFragmentDirections.actionCreateTreePointFragmentToPhotosFragment()
+            findNavController().navigate(direction)
+        }
+
         fun onCreateTreePointButtonClicked() {
             createTreePointViewModel.create(draft)
             createTreePointViewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->

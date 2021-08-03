@@ -6,6 +6,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import company.surious.data.config.DataConfig
 import company.surious.data.firestore.FirestoreCurrentUserRepository
 import company.surious.data.firestore.FirestoreTreePointRepository
@@ -13,19 +14,18 @@ import company.surious.data.firestore.FirestoreTreeTypeRepository
 import company.surious.data.firestore.FirestoreUserNameRepository
 import company.surious.data.managers.GoogleLoginManager
 import company.surious.data.preferences.TreeSharedPreferences
+import company.surious.data.storage.FirebaseStorageRepository
 import company.surious.domain.managers.LoginManager
 import company.surious.domain.preferences.InnerPreferences
 import company.surious.domain.preferences.UserPreferences
-import company.surious.domain.repositories.CurrentUserRepository
-import company.surious.domain.repositories.TreePointRepository
-import company.surious.domain.repositories.TreeTypeRepository
-import company.surious.domain.repositories.UserNameRepository
+import company.surious.domain.repositories.*
 import org.koin.dsl.binds
 import org.koin.dsl.module
 
 object DataModules {
     val FIREBASE = module {
         single { FirebaseFirestore.getInstance() }
+        single { FirebaseStorage.getInstance() }
     }
     val AUTH = module {
         single { FirebaseAuth.getInstance() }
@@ -44,6 +44,7 @@ object DataModules {
         single<CurrentUserRepository> { FirestoreCurrentUserRepository(get()) }
         single<TreeTypeRepository> { FirestoreTreeTypeRepository(get()) }
         single<TreePointRepository> { FirestoreTreePointRepository(get()) }
+        single<CloudStorageRepository> { FirebaseStorageRepository(get()) }
     }
     val PREFERENCES = module {
         single<InnerPreferences> { TreeSharedPreferences(get()) }

@@ -77,6 +77,10 @@
             app:destination="@id/treeMapFragment"
             app:popUpTo="@id/createTreePointFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_createTreePointFragment_to_photosFragment"
+            app:destination="@id/photosFragment"
+            app:popUpTo="@id/createTreePointFragment" />
     </fragment>
     <dialog
         android:id="@+id/monthPickerDialogFragment"
@@ -102,5 +106,10 @@
             android:name="treePoint"
             app:argType="company.surious.domain.entities.TreePoint" />
     </dialog>
+    <fragment
+        android:id="@+id/photosFragment"
+        android:name="company.surious.treepoint.ui.common.fragments.photo.PhotosFragment"
+        android:label="PhotosFragment"
+        tools:layout="@layout/fragment_photos" />
 
 </navigation>
