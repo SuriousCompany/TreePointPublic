@@ -23,6 +23,10 @@
             android:value="${mapsApiKey}" />
 
         <activity
+            android:name=".ui.common.activities.AboutActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -31,7 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.auth.AuthActivity" />
     </application>
 

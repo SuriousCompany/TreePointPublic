@@ -11,7 +11,7 @@
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@{month.selected ? @color/lightGreen : @color/white}"
+        android:background="@{month.selected ? @color/surfaceColor : @color/white}"
         android:padding="8dp">
 
         <TextView

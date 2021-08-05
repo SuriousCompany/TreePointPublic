@@ -98,7 +98,7 @@
             app:counterEnabled="true"
             app:counterMaxLength="18"
             app:errorEnabled="true"
-            app:errorTextColor="@color/red"
+            app:errorTextColor="@color/errorColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/yourUsernameLabel"
             app:layout_constraintStart_toStartOf="@id/yourUsernameLabel"

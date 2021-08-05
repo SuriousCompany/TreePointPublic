@@ -64,9 +64,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:background="@color/lightGreen"
             app:layout_constraintBottom_toTopOf="@id/selectFruitingSeasonCard"
             app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/backgroundColor"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_height="48dp" />
 
@@ -90,10 +90,9 @@
                 android:layout_margin="16dp"
                 android:gravity="center"
                 android:text="@{FruitingRangeTextHelper.INSTANCE.getFruitingRangeText(context, fruitingRange)}"
-                android:textColor="@{fruitingRange != null ? @color/green_500 : @color/red}"
+                android:textColor="@{fruitingRange != null ? @color/primaryColor : @color/errorColor}"
                 android:textSize="24sp"
-                tools:text="@string/select_fruiting_season"
-                tools:textColor="@color/red" />
+                tools:text="@string/select_fruiting_season" />
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -121,10 +120,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:background="@color/green_A700"
+            android:background="@color/secondaryColor"
             android:onClick="@{()->eventHandler.onCreateTreePointButtonClicked()}"
             android:text="@string/create_tree_point"
-            android:textColor="@color/black"
+            android:textColor="@color/secondaryOnColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
