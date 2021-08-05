@@ -42,17 +42,12 @@ android {
                 keyPassword keystoreProperties['DEBUG_KEY_PASSWORD']
             }
             catch (ignored) {
-                throw new InvalidUserDataException("Define DISTRIBUTION_KEY_PASSWORD in keystore.properties before building firebaseAppDistribution variant.")
+                throw new InvalidUserDataException("Define DEBUG_KEY_PASSWORD in keystore.properties before building debug variant.")
             }
         }
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            matchingFallbacks = ['release']
-        }
         debug {
             signingConfig android.signingConfigs.debug
             debuggable true
