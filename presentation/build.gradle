@@ -34,26 +34,22 @@ android {
     }
 
     signingConfigs {
-        firebaseAppDistribution {
+        debug {
             try {
-                storeFile rootProject.file("debugKey.jks")
-                keyAlias "appDistributionKey"
-                storePassword keystoreProperties['FIREBASE_DISTRIBUTION_KEY_PASSWORD']
-                keyPassword keystoreProperties['FIREBASE_DISTRIBUTION_KEY_PASSWORD']
+                storeFile rootProject.file("debug.jks")
+                keyAlias "debug"
+                storePassword keystoreProperties['DEBUG_KEY_PASSWORD']
+                keyPassword keystoreProperties['DEBUG_KEY_PASSWORD']
             }
             catch (ignored) {
-                throw new InvalidUserDataException("Define FIREBASE_DISTRIBUTION_KEY_PASSWORD in keystore.properties before building firebaseAppDistribution variant.")
+                throw new InvalidUserDataException("Define DEBUG_KEY_PASSWORD in keystore.properties before building debug variant.")
             }
         }
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        firebaseAppDistribution {
-            signingConfig android.signingConfigs.firebaseAppDistribution
+        debug {
+            signingConfig android.signingConfigs.debug
             debuggable true
             minifyEnabled false
             matchingFallbacks = ['debug']
@@ -86,4 +82,5 @@ dependencies {
     implementation presentationViews
     implementation presentationNavigation
     implementation presentationPlayServices
+    implementation 'androidx.appcompat:appcompat:1.3.1'
 }

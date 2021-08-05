@@ -17,7 +17,6 @@
 
         <include
             layout="@layout/layout_loading"
-            app:backgroundColor="@{@color/white}"
             tools:visibility="invisible"
             app:visible="@{isLoading}" />
 

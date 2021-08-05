@@ -38,7 +38,7 @@ class TreeTypeSpinnerAdapter(context: Context) :
             ContextCompat.getColor(
                 view.context,
                 if (isSelected) {
-                    R.color.lightGreen
+                    R.color.backgroundColor
                 } else {
                     R.color.white
                 }

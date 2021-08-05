@@ -38,7 +38,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/whiteGreen"
+        android:background="@color/white"
         tools:context=".ui.common.fragments.create_tree_point.CreateTreePointFragment">
 
         <include
@@ -64,9 +64,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:background="@color/lightGreen"
             app:layout_constraintBottom_toTopOf="@id/selectFruitingSeasonTextView"
             app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/backgroundColor"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_height="48dp" />
 
@@ -132,10 +132,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:background="@color/green_A700"
+            android:background="@color/secondaryColor"
             android:onClick="@{()->eventHandler.onCreateTreePointButtonClicked()}"
             android:text="@string/create_tree_point"
-            android:textColor="@color/black"
+            android:textColor="@color/secondaryOnColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -1,4 +1,4 @@
 ext {
-    version_code = 10
-    version_name = '0.2.1'
+    version_code = 13
+    version_name = '0.2.4'
 }

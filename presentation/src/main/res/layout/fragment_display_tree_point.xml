@@ -60,8 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/treeTypeTextView"
-            tools:text="@string/select_fruiting_season"
-            tools:textColor="@color/red" />
+            tools:text="@string/select_fruiting_season" />
 
         <TextView
             android:id="@+id/verifiedLabel"
@@ -80,13 +79,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@{treePoint.isVerified ? @string/verified : @string/not_verified}"
-            android:textColor="@{treePoint.isVerified ? @color/green_900 : @color/red}"
+            android:textColor="@{treePoint.isVerified ? @color/primaryColor : @color/errorColor}"
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@id/verifiedLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/creatorNameLabel"
-            tools:text="not verified"
-            tools:textColor="@color/red" />
+            tools:text="not verified" />
 
         <TextView
             android:id="@+id/creatorNameLabel"
@@ -105,7 +103,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@{treePoint.creatorName}"
-            android:textColor="@color/green_900"
+            android:textColor="@color/primaryColor"
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@id/creatorNameLabel"
             app:layout_constraintEnd_toEndOf="parent"
