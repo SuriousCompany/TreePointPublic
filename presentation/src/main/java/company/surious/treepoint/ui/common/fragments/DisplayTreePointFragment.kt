@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import company.surious.domain.entities.TreePoint
 import company.surious.domain.logging.logNavigation
@@ -48,6 +49,17 @@ class DisplayTreePointFragment : DialogFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.treePoint = MutableLiveData<TreePoint>().apply {
             value = arguments.treePoint
+        }
+        binding.eventHandler = DisplayTreePointFragmentEventHandler()
+    }
+
+    inner class DisplayTreePointFragmentEventHandler {
+        fun photosButtonClicked() {
+            val destination =
+                DisplayTreePointFragmentDirections.actionDisplayTreePointFragmentToPhotosFragment(
+                    arguments.treePoint.id
+                )
+            findNavController().navigate(destination)
         }
     }
 }

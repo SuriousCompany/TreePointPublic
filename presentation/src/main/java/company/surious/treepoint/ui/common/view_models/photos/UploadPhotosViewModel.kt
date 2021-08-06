@@ -1,4 +1,4 @@
-package company.surious.treepoint.ui.common.view_models
+package company.surious.treepoint.ui.common.view_models.photos
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData

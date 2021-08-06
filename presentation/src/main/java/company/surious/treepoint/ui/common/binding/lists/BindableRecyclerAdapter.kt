@@ -19,6 +19,7 @@ abstract class BindableRecyclerAdapter<Binding : ViewDataBinding, Item : Any, Vi
         val copy = ArrayList(data)
         this.data.clear()
         this.data.addAll(copy)
+        notifyDataSetChanged()
     }
 
     fun clear() {

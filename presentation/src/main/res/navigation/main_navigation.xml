@@ -74,7 +74,7 @@
         </action>
         <action
             android:id="@+id/action_createTreePointFragment_to_photosFragment"
-            app:destination="@id/photosFragment"
+            app:destination="@id/uploadPhotosFragment"
             app:popUpTo="@id/createTreePointFragment" />
     </fragment>
     <dialog
@@ -100,12 +100,15 @@
         <argument
             android:name="treePoint"
             app:argType="company.surious.domain.entities.TreePoint" />
+        <action
+            android:id="@+id/action_displayTreePointFragment_to_photosFragment"
+            app:destination="@id/photosFragment" />
     </dialog>
     <fragment
-        android:id="@+id/photosFragment"
-        android:name="company.surious.treepoint.ui.common.fragments.photo.PhotosFragment"
-        android:label="PhotosFragment"
-        tools:layout="@layout/fragment_photos">
+        android:id="@+id/uploadPhotosFragment"
+        android:name="company.surious.treepoint.ui.common.fragments.photo.UploadPhotosFragment"
+        android:label="IploadPhotosFragment"
+        tools:layout="@layout/fragment_upload_photos">
         <argument
             android:name="treePointId"
             app:argType="string" />
@@ -115,16 +118,20 @@
         <argument
             android:name="lng"
             app:argType="float" />
-        <argument
-            android:name="loadedPhotos"
-            android:defaultValue="@null"
-            app:argType="company.surious.treepoint.ui.common.fragments.photo.PhotoStorage"
-            app:nullable="true" />
         <action
             android:id="@+id/action_PhotosFragment_to_treeMapFragment"
             app:destination="@id/treeMapFragment"
-            app:popUpTo="@id/photosFragment"
+            app:popUpTo="@id/uploadPhotosFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/photosFragment"
+        android:name="company.surious.treepoint.ui.common.fragments.photo.PhotosFragment"
+        android:label="PhotosFragment"
+        tools:layout="@layout/fragment_photos">
+        <argument
+            android:name="treePointId"
+            app:argType="string" />
     </fragment>
 
 </navigation>
