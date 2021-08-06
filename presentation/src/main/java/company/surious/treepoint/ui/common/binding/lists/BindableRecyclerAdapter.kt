@@ -11,7 +11,7 @@ abstract class BindableRecyclerAdapter<Binding : ViewDataBinding, Item : Any, Vi
 
     protected abstract val itemLayoutRes: Int
 
-    protected val data = ArrayList<Item>()
+    val data = ArrayList<Item>()
 
     open var eventHandler: RecyclerViewEventHandler<Item>? = null
 
@@ -32,11 +32,13 @@ abstract class BindableRecyclerAdapter<Binding : ViewDataBinding, Item : Any, Vi
         val item = data[adapterPosition]
         eventHandler?.let { handler ->
             holder.binding.root.setOnClickListener {
-                onItemClicked(adapterPosition, item)
+                val index = data.indexOf(item)
+                onItemClicked(index, item)
                 handler.onItemClicked(adapterPosition, item)
             }
             holder.binding.root.setOnLongClickListener {
-                handler.onItemLongClicked(adapterPosition, item)
+                val index = data.indexOf(item)
+                handler.onItemLongClicked(index, item)
                 onItemLongClicked(adapterPosition, item)
             }
         }

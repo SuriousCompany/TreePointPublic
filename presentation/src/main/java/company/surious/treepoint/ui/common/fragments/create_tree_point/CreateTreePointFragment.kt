@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -37,7 +36,6 @@ class CreateTreePointFragment : BaseMapFragment() {
     private val draft = TreePointDraft()
     private val userPreferences: UserPreferences by inject()
 
-    //TODO remove it
     private val createTreePointViewModel: CreateTreePointViewModel by inject()
     private var selectedFruitionSeason: Pair<Int, Int>? = null
 
@@ -66,6 +64,21 @@ class CreateTreePointFragment : BaseMapFragment() {
         super.onViewCreated(view, savedInstanceState)
         allTreeTypesViewModel.startObserving()
         getMapAsync(::initMap)
+        observeTreePointCreation()
+    }
+
+    private fun observeTreePointCreation() {
+        createTreePointViewModel.createdTreePointId.observe(viewLifecycleOwner, { treePointId ->
+            if (treePointId != null) {
+                val direction =
+                    CreateTreePointFragmentDirections.actionCreateTreePointFragmentToPhotosFragment(
+                        treePointId,
+                        draft.lat.toFloat(),
+                        draft.lng.toFloat()
+                    )
+                findNavController().navigate(direction)
+            }
+        })
     }
 
     override fun onResume() {
@@ -140,30 +153,8 @@ class CreateTreePointFragment : BaseMapFragment() {
             showMonthPicker()
         }
 
-        fun onPhotoClicked() {
-            val direction =
-                CreateTreePointFragmentDirections.actionCreateTreePointFragmentToPhotosFragment()
-            findNavController().navigate(direction)
-        }
-
         fun onCreateTreePointButtonClicked() {
             createTreePointViewModel.create(draft)
-            createTreePointViewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
-                if (!isLoading) {
-                    Toast.makeText(
-                        requireActivity(),
-                        getString(R.string.tree_point_created),
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                    val action =
-                        CreateTreePointFragmentDirections.actionCreateTreePointFragmentToTreeMapFragment(
-                            draft.lat.toFloat(),
-                            draft.lng.toFloat()
-                        )
-                    findNavController().navigate(action)
-                }
-            })
         }
     }
 }

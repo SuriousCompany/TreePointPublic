@@ -73,11 +73,6 @@
                 android:defaultValue="-1" />
         </action>
         <action
-            android:id="@+id/action_createTreePointFragment_to_treeMapFragment"
-            app:destination="@id/treeMapFragment"
-            app:popUpTo="@id/createTreePointFragment"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_createTreePointFragment_to_photosFragment"
             app:destination="@id/photosFragment"
             app:popUpTo="@id/createTreePointFragment" />
@@ -110,6 +105,26 @@
         android:id="@+id/photosFragment"
         android:name="company.surious.treepoint.ui.common.fragments.photo.PhotosFragment"
         android:label="PhotosFragment"
-        tools:layout="@layout/fragment_photos" />
+        tools:layout="@layout/fragment_photos">
+        <argument
+            android:name="treePointId"
+            app:argType="string" />
+        <argument
+            android:name="lat"
+            app:argType="float" />
+        <argument
+            android:name="lng"
+            app:argType="float" />
+        <argument
+            android:name="loadedPhotos"
+            android:defaultValue="@null"
+            app:argType="company.surious.treepoint.ui.common.fragments.photo.PhotoStorage"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_PhotosFragment_to_treeMapFragment"
+            app:destination="@id/treeMapFragment"
+            app:popUpTo="@id/photosFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

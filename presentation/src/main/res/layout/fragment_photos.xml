@@ -10,6 +10,14 @@
         <variable
             name="isAddingEnabled"
             type="androidx.lifecycle.LiveData&lt;Boolean>" />
+
+        <variable
+            name="isDoneButtonEnabled"
+            type="androidx.lifecycle.LiveData&lt;Boolean>" />
+
+        <variable
+            name="isLoading"
+            type="androidx.lifecycle.LiveData&lt;Boolean>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,21 +26,42 @@
         android:layout_height="match_parent"
         tools:context=".ui.common.fragments.photo.PhotosFragment">
 
-        <ImageView
-            android:id="@+id/imagePreview"
+        <include
+            layout="@layout/layout_loading"
+            setVisibilityWithGone="@{isLoading}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/photosRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            isVisible="@{isAddingEnabled}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:contentDescription="@null"
             android:onClick="@{()->eventHandler.onAddButtonClicked()}"
             android:src="@drawable/ic_add_black"
+            app:backgroundTint="@color/yellowAccent"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            isVisible="@{isDoneButtonEnabled}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="@null"
+            android:onClick="@{()->eventHandler.onDoneButtonClicked()}"
+            android:src="@drawable/ic_done_black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

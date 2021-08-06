@@ -7,51 +7,59 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import company.surious.domain.logging.logVerbose
-import company.surious.domain.use_case.cloud_storage.UploadTreePointPhotoUseCase
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentPhotosBinding
+import company.surious.treepoint.ui.common.binding.lists.RecyclerViewEventHandler
+import company.surious.treepoint.ui.common.view_models.UploadPhotosViewModel
 import org.koin.android.ext.android.inject
 import java.io.File
 
 
 //TODO block add button before permission received
 class PhotosFragment : Fragment() {
-    private lateinit var binding: FragmentPhotosBinding
-    private val uploadUseCase: UploadTreePointPhotoUseCase by inject()
-    private val uri by lazy {
-        val tmpFile =
-            File.createTempFile("TreePointPhoto", ".png", requireActivity().cacheDir).apply {
-                createNewFile()
-                //deleteOnExit()
-            }
-        FileProvider.getUriForFile(
-            requireContext(),
-            "${requireContext().packageName}.provider",
-            tmpFile
-        )
+    companion object {
+        private const val MAX_PHOTOS_FOR_UPLOAD = 5
     }
+
+    private val photoAdapter = PhotoAdapter()
+    private val isLoading = MutableLiveData<Boolean>().apply { value = true }
     private val isAddingEnabled = MutableLiveData<Boolean>().apply { value = false }
+    private val isDoneButtonEnabled = MutableLiveData<Boolean>().apply { value = false }
+    private val arguments: PhotosFragmentArgs by navArgs()
+    private val uploadPhotosViewModel: UploadPhotosViewModel by inject()
+
+    private val isUploadingMode
+        get() = arguments.loadedPhotos == null
+
+    private var lastUri: Uri? = null
+
+    private lateinit var binding: FragmentPhotosBinding
+
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 onPermissionGranted()
             } else {
-                logVerbose("", "")
+                logVerbose("", "")//TODO
             }
         }
     private val photoLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { receivedPicture ->
             if (receivedPicture) {
-                onPhotoReceived(uri)
+                lastUri?.let(::onPhotoReceived)
             } else {
-                logVerbose("", "")
+                logVerbose("", "")//TODO
             }
         }
 
@@ -60,14 +68,34 @@ class PhotosFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_photos, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.eventHandler = PhotosFragmentEventHandler()
+        binding.photosRecyclerView.adapter = photoAdapter
+        binding.photosRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.isAddingEnabled = isAddingEnabled
+        binding.isDoneButtonEnabled = isDoneButtonEnabled
+        binding.isLoading = isLoading
         return binding.root
+    }
+
+    private fun initUploadingMode() {
+        checkPermission()
+        observeUploadingResult()
+    }
+
+    private fun initDisplayingMode() {
+        isLoading.value = false
+        photoAdapter.setData(arguments.loadedPhotos!!.photos)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkPermission()
+        photoAdapter.eventHandler = binding.eventHandler
+        if (isUploadingMode) {
+            initUploadingMode()
+        } else {
+            initDisplayingMode()
+        }
     }
 
     private fun checkPermission() {
@@ -85,21 +113,93 @@ class PhotosFragment : Fragment() {
     }
 
     private fun onPermissionGranted() {
-        isAddingEnabled.value = true
-    }
-
-    private fun requestPhoto() {
-        photoLauncher.launch(uri)
+        isLoading.value = false
+        refreshAddingButton()
     }
 
     private fun onPhotoReceived(uri: Uri) {
-        binding.imagePreview.setImageURI(uri)
-        uploadUseCase.execute(uri).subscribe()
+        photoAdapter.add(uri)
+        refreshButtons()
+        //TODO uploadUseCase.execute(uri).subscribe()
     }
 
-    inner class PhotosFragmentEventHandler {
+    private fun createNewPhotoUri(): Uri {
+        val tmpFile =
+            File.createTempFile("${System.currentTimeMillis()}", ".png", requireActivity().cacheDir)
+                .apply {
+                    createNewFile()
+                    deleteOnExit()
+                }
+        return FileProvider.getUriForFile(
+            requireContext(),
+            "${requireContext().packageName}.provider",
+            tmpFile
+        )
+    }
+
+    private fun takePhoto() {
+        lastUri = createNewPhotoUri()
+        photoLauncher.launch(lastUri)
+    }
+
+    private fun refreshAddingButton() {
+        isAddingEnabled.value = photoAdapter.data.size < MAX_PHOTOS_FOR_UPLOAD
+    }
+
+    private fun refreshDoneButton() {
+        isDoneButtonEnabled.value = photoAdapter.data.size > 0
+    }
+
+    private fun refreshButtons() {
+        refreshAddingButton()
+        refreshDoneButton()
+    }
+
+    private fun removePhoto(index: Int, uri: Uri) {
+        //TODO show a dialog about the photo removing
+        photoAdapter.remove(index)
+        refreshButtons()
+    }
+
+    private fun returnToTheMap() {
+        Toast.makeText(
+            requireActivity(),
+            getString(R.string.tree_point_created),
+            Toast.LENGTH_LONG
+        ).show()
+        val action =
+            PhotosFragmentDirections.actionPhotosFragmentToTreeMapFragment(
+                arguments.lat,
+                arguments.lng
+            )
+        findNavController().navigate(action)
+    }
+
+    private fun observeUploadingResult() {
+        uploadPhotosViewModel.uploadingResult.observe(viewLifecycleOwner, { uploadedPhotos ->
+            if (uploadedPhotos != UploadPhotosViewModel.NOT_UPLOADED) {
+                returnToTheMap()
+            }
+        })
+    }
+
+    inner class PhotosFragmentEventHandler : RecyclerViewEventHandler<Uri> {
         fun onAddButtonClicked() {
-            requestPhoto()
+            takePhoto()
+        }
+
+        fun onDoneButtonClicked() {
+            uploadPhotosViewModel.uploadPhotos(arguments.treePointId, photoAdapter.data)
+        }
+
+        override fun onItemClicked(index: Int, item: Uri) {
+            //TODO show fullscreen image
+        }
+
+        override fun onItemLongClicked(index: Int, item: Uri) {
+            if (isUploadingMode) {
+                removePhoto(index, item)
+            }
         }
     }
 }

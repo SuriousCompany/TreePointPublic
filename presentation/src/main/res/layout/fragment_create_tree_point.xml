@@ -64,54 +64,42 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:layout_constraintBottom_toTopOf="@id/selectFruitingSeasonTextView"
+            app:layout_constraintBottom_toTopOf="@id/selectFruitingSeasonCard"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@color/backgroundColor"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_height="48dp" />
 
-        <TextView
-            android:id="@+id/selectFruitingSeasonTextView"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/selectFruitingSeasonCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@color/white"
-            android:gravity="center"
             android:onClick="@{()->eventHandler.onSelectFruitingSeasonClicked()}"
-            android:padding="8dp"
-            android:text="@{FruitingRangeTextHelper.INSTANCE.getFruitingRangeText(context, fruitingRange)}"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@id/commentTextInputLayout"
-            app:layout_constraintEnd_toStartOf="@id/photoTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="@string/select_fruiting_season" />
-
-        <TextView
-            android:id="@+id/photoTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:onClick="@{()->eventHandler.onPhotoClicked()}"
-            android:padding="8dp"
-            android:text="@string/photo"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="36dp"
             app:layout_constraintBottom_toTopOf="@id/commentTextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/selectFruitingSeasonTextView" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:text="@{FruitingRangeTextHelper.INSTANCE.getFruitingRangeText(context, fruitingRange)}"
+                android:textColor="@{fruitingRange != null ? @color/primaryColor : @color/errorColor}"
+                android:textSize="24sp"
+                tools:text="@string/select_fruiting_season" />
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/commentTextInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@color/white"
             android:hint="@string/comment"
             android:textColorHint="@color/gray"
             app:layout_constraintBottom_toTopOf="@id/createTreePointButton"

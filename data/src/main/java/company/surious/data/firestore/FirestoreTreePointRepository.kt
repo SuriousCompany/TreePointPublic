@@ -18,7 +18,9 @@ class FirestoreTreePointRepository(firebaseFirestore: FirebaseFirestore) :
     override val firestoreModelClass = FirestoreTreePoint::class
     override val mapper: Mapper<FirestoreTreePoint, TreePoint> = TreePointMapper
 
-    override fun updateTreePoint(treePoint: TreePoint): Completable = add(treePoint)
+    override fun updateTreePoint(treePoint: TreePoint): Completable = update(treePoint)
+
+    override fun createTreePoint(treePoint: TreePoint): Single<String> = create(treePoint)
 
     override fun getAllTreePoints(): Single<List<TreePoint>> = getAll()
 
