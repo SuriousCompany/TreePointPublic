@@ -9,15 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import company.surious.treepoint.R
-import company.surious.treepoint.databinding.FragmentPhotosBinding
+import company.surious.treepoint.databinding.FragmentDisplayPhotosBinding
 import company.surious.treepoint.ui.common.view_models.photos.TreePointPhotosViewModel
 import org.koin.android.ext.android.inject
 
 
-class PhotosFragment : Fragment() {
-    private lateinit var binding: FragmentPhotosBinding
+class DisplayPhotosFragment : Fragment() {
+    private lateinit var binding: FragmentDisplayPhotosBinding
     private val viewModel: TreePointPhotosViewModel by inject()
-    private val args: PhotosFragmentArgs by navArgs()
+    private val args: DisplayPhotosFragmentArgs by navArgs()
 
     private val photoAdapter = StorageReferenceAdapter()
 
@@ -25,7 +25,8 @@ class PhotosFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_photos, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_display_photos, container, false)
         initBinding()
         return binding.root
     }

@@ -126,9 +126,9 @@
     </fragment>
     <fragment
         android:id="@+id/photosFragment"
-        android:name="company.surious.treepoint.ui.common.fragments.photo.PhotosFragment"
+        android:name="company.surious.treepoint.ui.common.fragments.photo.DisplayPhotosFragment"
         android:label="PhotosFragment"
-        tools:layout="@layout/fragment_photos">
+        tools:layout="@layout/fragment_display_photos">
         <argument
             android:name="treePointId"
             app:argType="string" />
