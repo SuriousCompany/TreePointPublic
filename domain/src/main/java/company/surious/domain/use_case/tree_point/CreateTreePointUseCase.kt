@@ -7,23 +7,23 @@ import company.surious.domain.errors.PreferencesError
 import company.surious.domain.preferences.InnerPreferences
 import company.surious.domain.repositories.CurrentUserRepository
 import company.surious.domain.repositories.TreePointRepository
-import company.surious.domain.use_case.base.CompletableUseCase
-import io.reactivex.Completable
+import company.surious.domain.use_case.base.SingleUseCase
+import io.reactivex.Single
 
 class CreateTreePointUseCase(
     private val currentUserRepository: CurrentUserRepository,
     private val preferences: InnerPreferences,
     private val treePointRepository: TreePointRepository
-) : CompletableUseCase<TreePointDraft>() {
+) : SingleUseCase<TreePointDraft, String>() {
 
-    override fun createCompletable(params: TreePointDraft): Completable {
+    override fun createSingle(params: TreePointDraft): Single<String> {
         val currentUserId = preferences.currentUserId
         return if (currentUserId != null) {
-            currentUserRepository.getCurrentUser(currentUserId).flatMapCompletable { user ->
-                treePointRepository.updateTreePoint(createTreePoint(user, params))
+            currentUserRepository.getCurrentUser(currentUserId).flatMapSingle { user ->
+                treePointRepository.createTreePoint(createTreePoint(user, params))
             }
         } else {
-            Completable.error(PreferencesError(customMessage = "User id is not initialized"))
+            Single.error(PreferencesError(customMessage = "User id is not initialized"))
         }
     }
 

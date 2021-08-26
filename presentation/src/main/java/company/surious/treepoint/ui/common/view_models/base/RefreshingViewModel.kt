@@ -21,6 +21,7 @@ abstract class RefreshingViewModel<Request, Data> : LoadingViewModel() {
             refreshingUseCase.execute(argument).subscribe(
                 { freshData ->
                     dataSource.value = freshData
+                    isLoading.value = false
                 },
                 ::logUnhandledError
             )

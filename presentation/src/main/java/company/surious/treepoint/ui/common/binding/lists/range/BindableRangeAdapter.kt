@@ -2,7 +2,8 @@ package company.surious.treepoint.ui.common.binding.lists.range
 
 import androidx.databinding.ViewDataBinding
 import company.surious.domain.errors.UiError
-import company.surious.domain.logging.logDebug
+import company.surious.domain.logging.LogTags
+import company.surious.domain.logging.logVerbose
 import company.surious.treepoint.ui.common.binding.lists.BindableRecyclerAdapter
 import company.surious.treepoint.ui.common.binding.lists.BindableViewHolder
 import company.surious.treepoint.ui.common.binding.lists.RecyclerViewEventHandler
@@ -33,20 +34,20 @@ abstract class BindableRangeAdapter<Binding : ViewDataBinding, Item : Selectable
     override fun onItemClicked(index: Int, item: Item) {
         super.onItemClicked(index, item)
         if (firstSelectedItemPosition == -1 && lastSelectedItemPosition == -1) {
-            logDebug("clicked first item: $index")
+            logVerbose(LogTags.DEBUG, "clicked first item: $index")
             selectRange(index, index)
         } else {
             when {
                 index < firstSelectedItemPosition -> {
-                    logDebug("clicked left item: $index")
+                    logVerbose(LogTags.DEBUG, "clicked left item: $index")
                     selectRange(index, lastSelectedItemPosition)
                 }
                 index > lastSelectedItemPosition -> {
-                    logDebug("clicked right item: $index")
+                    logVerbose(LogTags.DEBUG, "clicked right item: $index")
                     selectRange(firstSelectedItemPosition, index)
                 }
                 else -> {
-                    logDebug("clicked item in range: $index")
+                    logVerbose(LogTags.DEBUG, "clicked item in range: $index")
                     handleClickInSelectedRange(index)
                 }
             }
@@ -58,22 +59,22 @@ abstract class BindableRangeAdapter<Binding : ViewDataBinding, Item : Selectable
         val itemsCountAfterClick = lastSelectedItemPosition - index
         when {
             itemsCountBeforeClick < itemsCountAfterClick -> {
-                logDebug("clicked item in left range")
+                logVerbose(LogTags.DEBUG, "clicked item in left range")
                 isLastClickEndTheEndOfSelection = false
                 unselectRange(firstSelectedItemPosition, index)
             }
             itemsCountBeforeClick > itemsCountAfterClick -> {
-                logDebug("clicked item in right range")
+                logVerbose(LogTags.DEBUG, "clicked item in right range")
                 isLastClickEndTheEndOfSelection = true
                 unselectRange(index, lastSelectedItemPosition)
             }
             else -> {
-                logDebug("clicked item in the middle of the range")
+                logVerbose(LogTags.DEBUG, "clicked item in the middle of the range")
                 if (isLastClickEndTheEndOfSelection) {
-                    logDebug("unselecting right half")
+                    logVerbose(LogTags.DEBUG, "unselecting right half")
                     unselectRange(index, lastSelectedItemPosition)
                 } else {
-                    logDebug("unselecting left half")
+                    logVerbose(LogTags.DEBUG, "unselecting left half")
                     unselectRange(firstSelectedItemPosition, index)
                 }
             }
@@ -81,7 +82,7 @@ abstract class BindableRangeAdapter<Binding : ViewDataBinding, Item : Selectable
     }
 
     protected open fun selectRange(start: Int, end: Int) {
-        logDebug("select range $start, $end")
+        logVerbose(LogTags.DEBUG, "select range $start, $end")
         for (i: Int in start..end) {
             data[i].isSelected = true
         }
@@ -116,7 +117,7 @@ abstract class BindableRangeAdapter<Binding : ViewDataBinding, Item : Selectable
     }
 
     protected open fun unselectRange(start: Int, end: Int) {
-        logDebug("unselect range $start, $end")
+        logVerbose(LogTags.DEBUG, "unselect range $start, $end")
         //TODO update isLastClickEndTheEndOfSelection
         for (i: Int in start..end) {
             data[i].isSelected = false

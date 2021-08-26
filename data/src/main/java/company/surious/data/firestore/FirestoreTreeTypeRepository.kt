@@ -24,4 +24,5 @@ class FirestoreTreeTypeRepository(firebaseFirestore: FirebaseFirestore) :
     override fun observeAllTreeTypes(): Observable<List<TreeType>> = observe()
 
     override fun getAllTreeTypes(): Single<List<TreeType>> = getAll()
+
 }

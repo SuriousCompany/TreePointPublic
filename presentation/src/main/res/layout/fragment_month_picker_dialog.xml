@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:background="@color/selectedMonthColor"
+            android:background="@color/yellowAccent"
             android:onClick="@{()->eventHandler.onCancelButtonClicked()}"
             android:text="@string/cancel"
             app:layout_constraintBottom_toBottomOf="parent"

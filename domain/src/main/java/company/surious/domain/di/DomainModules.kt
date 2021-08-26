@@ -2,6 +2,9 @@ package company.surious.domain.di
 
 import company.surious.domain.assemblers.TreePointAssembler
 import company.surious.domain.use_case.auth.*
+import company.surious.domain.use_case.cloud_storage.DownloadTreePointPhotosUseCase
+import company.surious.domain.use_case.cloud_storage.UploadTreePointPhotoUseCase
+import company.surious.domain.use_case.cloud_storage.UploadTreePointPhotosUseCase
 import company.surious.domain.use_case.tree_point.*
 import company.surious.domain.use_case.tree_type.GetAllTreeTypesUseCase
 import company.surious.domain.use_case.tree_type.GetTreeTypeUseCase
@@ -30,6 +33,10 @@ object DomainModules {
         factory { GetAllTreePointsUseCase(get(), get()) }
         factory { GetTreePointUseCase(get(), get()) }
         factory { ObserveTreePointUseCase(get(), get()) }
+        //Storage:
+        factory { UploadTreePointPhotoUseCase(get()) }
+        factory { UploadTreePointPhotosUseCase(get()) }
+        factory { DownloadTreePointPhotosUseCase(get()) }
     }
 
     val ASSEMBLERS = module {

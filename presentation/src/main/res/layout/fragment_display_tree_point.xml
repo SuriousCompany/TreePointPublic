@@ -7,6 +7,10 @@
             name="treePoint"
             type="androidx.lifecycle.LiveData&lt;company.surious.domain.entities.TreePoint>" />
 
+        <variable
+            name="eventHandler"
+            type="company.surious.treepoint.ui.common.fragments.DisplayTreePointFragment.DisplayTreePointFragmentEventHandler" />
+
         <import type="company.surious.treepoint.ui.common.fragments.create_tree_point.FruitingRangeTextHelper" />
     </data>
 
@@ -47,13 +51,13 @@
 
         <TextView
             android:id="@+id/displayFruitingTextView"
+            setVisibilityWithGone="@{treePoint.hasRipeSeason}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:ellipsize="none"
             android:gravity="center"
             android:singleLine="true"
-            setVisibilityWithGone="@{treePoint.hasRipeSeason}"
             android:text="@{FruitingRangeTextHelper.INSTANCE.getFruitingRangeText(context, treePoint.ripeStartMonth, treePoint.ripeEndMonth)}"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -111,6 +115,7 @@
             tools:text="hornet" />
 
         <TextView
+            android:id="@+id/displayCommentTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -121,5 +126,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/creatorNameTextView"
             tools:text="Some\nmultiline\ntext" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/yellowAccent"
+            android:onClick="@{()->eventHandler.photosButtonClicked()}"
+            android:text="@string/photos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/displayCommentTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

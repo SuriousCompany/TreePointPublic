@@ -20,18 +20,17 @@ abstract class SimpleCollectionRepository<FirestoreModel : Any, Entity : Identif
     protected abstract val firestoreModelClass: KClass<FirestoreModel>
     protected abstract val mapper: Mapper<FirestoreModel, Entity>
 
-    fun add(item: Entity): Completable {
-        val id = item.id
-        val document =
-            if (id.isNotEmpty()) {
-                firebaseFirestore.collection(collectionName).document(id)
-            } else {
-                val newDocument = firebaseFirestore.collection(collectionName).document()
-                item.id = newDocument.id
-                newDocument
-            }
-        return document.setAsync(mapper.mapToFirestoreModel(item))
-            .mapErrors { error -> mapFirestoreError(error, id) }
+    fun create(item: Entity): Single<String> {
+        val newDocument = firebaseFirestore.collection(collectionName).document()
+        item.id = newDocument.id
+        return newDocument.setAsync(mapper.mapToFirestoreModel(item))
+            .mapErrors { error -> mapFirestoreError(error, item.id) }.toSingleDefault(item.id)
+    }
+
+    fun update(item: Entity): Completable {
+        return firebaseFirestore.collection(collectionName).document(item.id)
+            .setAsync(mapper.mapToFirestoreModel(item))
+            .mapErrors { error -> mapFirestoreError(error, item.id) }
     }
 
 

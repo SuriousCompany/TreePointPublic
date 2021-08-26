@@ -33,7 +33,7 @@
     <string name="attribution_label">Attribution:</string>
     <string name="project_sources">Project sources:</string>
     <string name="sources_link">https://github.com/SuriousCompany/TreePointPublic</string>
-
+    <string name="photos">Photos</string>
 
     <string-array name="months">
         <item>January</item>
@@ -49,5 +49,7 @@
         <item>November</item>
         <item>December</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

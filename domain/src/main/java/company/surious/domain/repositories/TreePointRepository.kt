@@ -6,6 +6,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 interface TreePointRepository {
+    fun createTreePoint(treePoint: TreePoint): Single<String>
     fun updateTreePoint(treePoint: TreePoint): Completable
     fun getAllTreePoints(): Single<List<TreePoint>>
     fun observeAllTreePoints(): Observable<List<TreePoint>>

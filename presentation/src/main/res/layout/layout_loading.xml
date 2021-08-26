@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:background="@{backgroundColor != null ? backgroundColor : @color/transparentBlack}"
         android:clickable="true"
-        android:elevation="3dp"
+        android:elevation="10dp"
         android:focusable="true">
 
         <ProgressBar
