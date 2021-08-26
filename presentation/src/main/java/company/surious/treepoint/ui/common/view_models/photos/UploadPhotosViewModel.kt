@@ -19,6 +19,7 @@ class UploadPhotosViewModel(private val uploadUseCase: UploadTreePointPhotosUseC
     val uploadingResult = MutableLiveData<Int>().apply { value = NOT_UPLOADED }
 
     fun uploadPhotos(treePointId: String, photos: List<Uri>) {
+        isLoading.value = true
         disposables.add(
             uploadUseCase.execute(TreePointPhotos(treePointId, photos)).subscribe(
                 {

@@ -11,8 +11,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import company.surious.domain.logging.logDebug
+import company.surious.domain.logging.LogTags
 import company.surious.domain.logging.logNavigation
+import company.surious.domain.logging.logVerbose
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentMonthPickerDialogBinding
 import company.surious.treepoint.ui.common.binding.lists.range.RangeRecyclerViewEventHandler
@@ -72,13 +73,13 @@ class MonthPickerDialogFragment : DialogFragment() {
     }
 
     private fun selectMonths(monthSource: LiveData<List<SelectableMonth>>) {
-        logDebug("selectMonths")
+        logVerbose(LogTags.DEBUG, "selectMonths")
         monthSource.observe(viewLifecycleOwner, {
-            logDebug("monthSource triggered")
+            logVerbose(LogTags.DEBUG, "monthSource triggered")
             val startMonth = args.firstFruitingMonth
             val endMonth = args.lastFruitingMonth
             if (startMonth != -1 && endMonth != -1) {
-                logDebug("selecting months: $startMonth-$endMonth")
+                logVerbose(LogTags.DEBUG, "selecting months : $startMonth - $endMonth")
                 binding.adapter!!.selectMonthRange(startMonth, endMonth)
             }
         })

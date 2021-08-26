@@ -38,6 +38,7 @@ class UploadPhotosFragment : Fragment() {
     private val uploadPhotosViewModel: UploadPhotosViewModel by inject()
 
     private var lastUri: Uri? = null
+    private var isPermissionGranted = false
 
     private lateinit var binding: FragmentUploadPhotosBinding
 
@@ -78,7 +79,7 @@ class UploadPhotosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         photoAdapter.eventHandler = binding.eventHandler
         checkPermission()
-        observeUploadingResult()
+        observeViewModel()
     }
 
     private fun checkPermission() {
@@ -96,8 +97,13 @@ class UploadPhotosFragment : Fragment() {
     }
 
     private fun onPermissionGranted() {
-        isLoading.value = false
+        isPermissionGranted = true
         refreshAddingButton()
+        refreshLoadingState()
+    }
+
+    private fun refreshLoadingState(isUploading: Boolean = false) {
+        isLoading.value = isUploading || !isPermissionGranted
     }
 
     private fun onPhotoReceived(uri: Uri) {
@@ -158,11 +164,14 @@ class UploadPhotosFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun observeUploadingResult() {
+    private fun observeViewModel() {
         uploadPhotosViewModel.uploadingResult.observe(viewLifecycleOwner, { uploadedPhotos ->
             if (uploadedPhotos != UploadPhotosViewModel.NOT_UPLOADED) {
                 returnToTheMap()
             }
+        })
+        uploadPhotosViewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
+            refreshLoadingState(isLoading)
         })
     }
 

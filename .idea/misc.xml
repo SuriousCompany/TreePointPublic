@@ -17,7 +17,7 @@
         <entry key="presentation/src/main/res/layout/fragment_display_tree_point.xml" value="0.25" />
         <entry key="presentation/src/main/res/layout/fragment_error.xml" value="0.25" />
         <entry key="presentation/src/main/res/layout/fragment_loading.xml" value="0.10625" />
-        <entry key="presentation/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="presentation/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="presentation/src/main/res/layout/fragment_photos.xml" value="0.25" />
         <entry key="presentation/src/main/res/layout/fragment_registration.xml" value="0.17447916666666666" />
         <entry key="presentation/src/main/res/layout/fragment_tree_map.xml" value="0.22" />
