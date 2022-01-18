@@ -181,7 +181,12 @@ class UploadPhotosFragment : Fragment() {
         }
 
         fun onDoneButtonClicked() {
-            uploadPhotosViewModel.uploadPhotos(arguments.treePointId, photoAdapter.data)
+            //uploadPhotosViewModel.uploadPhotos(arguments.treePointId, photoAdapter.data)
+            val direction =
+                UploadPhotosFragmentDirections.actionUploadPhotosFragmentToIdentificationFragment(
+                    PhotoStorage(photoAdapter.data)
+                )
+            findNavController().navigate(direction)
         }
 
         override fun onItemClicked(index: Int, item: Uri) {

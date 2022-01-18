@@ -8,11 +8,11 @@ import company.surious.domain.extensions.safeOnComplete
 import company.surious.domain.extensions.safeOnError
 import company.surious.domain.extensions.safeOnNext
 import company.surious.domain.extensions.safeOnSuccess
-import io.reactivex.Completable
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.disposables.Disposables
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.Disposable
 import kotlin.reflect.KClass
 
 fun DocumentReference.getAsync() = Single.create<DocumentSnapshot> { emitter ->
@@ -55,14 +55,16 @@ fun <T : Any> DocumentReference.getAsyncMaybe(clazz: KClass<T>) = Maybe.create<T
         .addOnFailureListener(emitter::safeOnError)
 }
 
-fun <T : Any> DocumentReference.setAsync(t: T) = Completable.create { emitter ->
+fun <T : Any> DocumentReference.setAsync(t: T): Completable = Completable.create { emitter ->
     set(t)
-        .addOnSuccessListener { emitter.safeOnComplete() }
+        .addOnSuccessListener {
+            emitter.safeOnComplete()
+        }
         .addOnFailureListener(emitter::safeOnError)
 }
 
-fun <T : Any> DocumentReference.observe(clazz: KClass<T>) =
-    Observable.create<T> { emitter ->
+fun <T : Any> DocumentReference.observe(clazz: KClass<T>): Observable<T> =
+    Observable.create { emitter ->
         val listener = addSnapshotListener { value, error ->
             if (error == null) {
                 try {
@@ -79,7 +81,7 @@ fun <T : Any> DocumentReference.observe(clazz: KClass<T>) =
                 emitter.safeOnError(error)
             }
         }
-        emitter.setDisposable(Disposables.fromAction { listener.remove() })
+        emitter.setDisposable(Disposable.fromAction { listener.remove() })
     }
 
 fun <T : Any> CollectionReference.getAll(clazz: KClass<T>) =
@@ -119,6 +121,6 @@ fun <T : Any> CollectionReference.observe(clazz: KClass<T>) =
                 emitter.safeOnError(error)
             }
         }
-        emitter.setDisposable(Disposables.fromAction { listener.remove() })
+        emitter.setDisposable(Disposable.fromAction { listener.remove() })
     }
 

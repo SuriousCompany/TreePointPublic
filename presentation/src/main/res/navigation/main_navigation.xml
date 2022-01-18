@@ -29,12 +29,12 @@
             android:defaultValue="-1"
             app:argType="float" />
         <action
-            android:id="@+id/action_treeMapFragment_to_createTreePointFragment"
-            app:destination="@id/createTreePointFragment"
-            app:popUpTo="@id/treeMapFragment" />
-        <action
             android:id="@+id/action_treeMapFragment_to_displayTreePointFragment"
             app:destination="@id/displayTreePointFragment"
+            app:popUpTo="@id/treeMapFragment" />
+        <action
+            android:id="@+id/action_treeMapFragment_to_createTreePointFragment"
+            app:destination="@id/createTreePointFragment"
             app:popUpTo="@id/treeMapFragment" />
     </fragment>
     <fragment
@@ -99,7 +99,7 @@
         tools:layout="@layout/fragment_display_tree_point">
         <argument
             android:name="treePoint"
-            app:argType="company.surious.domain.entities.TreePoint" />
+            app:argType="company.surious.domain.entities.plants.TreePoint" />
         <action
             android:id="@+id/action_displayTreePointFragment_to_photosFragment"
             app:destination="@id/photosFragment" />
@@ -123,6 +123,10 @@
             app:destination="@id/treeMapFragment"
             app:popUpTo="@id/uploadPhotosFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_uploadPhotosFragment_to_identificationFragment"
+            app:destination="@id/identificationFragment"
+            app:popUpTo="@id/uploadPhotosFragment" />
     </fragment>
     <fragment
         android:id="@+id/photosFragment"
@@ -132,6 +136,15 @@
         <argument
             android:name="treePointId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/identificationFragment"
+        android:name="company.surious.treepoint.ui.common.fragments.identification.IdentificationFragment"
+        android:label="fragment_identification"
+        tools:layout="@layout/fragment_identification">
+        <argument
+            android:name="photos"
+            app:argType="company.surious.treepoint.ui.common.fragments.photo.PhotoStorage" />
     </fragment>
 
 </navigation>

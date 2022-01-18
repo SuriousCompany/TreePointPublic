@@ -1,11 +1,11 @@
 package company.surious.domain.use_case.auth
 
-import company.surious.domain.entities.RegisteredUser
+import company.surious.domain.entities.users.RegisteredUser
 import company.surious.domain.managers.LoginManager
 import company.surious.domain.repositories.CurrentUserRepository
 import company.surious.domain.repositories.UserNameRepository
 import company.surious.domain.use_case.base.SingleUseCase
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 class RegistrationUseCase(
     private val currentUserRepository: CurrentUserRepository,

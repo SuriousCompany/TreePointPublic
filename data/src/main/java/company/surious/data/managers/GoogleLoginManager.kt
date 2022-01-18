@@ -8,16 +8,16 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import company.surious.data.extensions.signOutAsync
-import company.surious.data.mappers.LoggedInUserMapper
-import company.surious.domain.entities.LoggedInUser
+import company.surious.data.firestore.mappers.LoggedInUserMapper
+import company.surious.domain.entities.users.LoggedInUser
 import company.surious.domain.errors.LoginError
 import company.surious.domain.extensions.mapErrors
 import company.surious.domain.extensions.safeOnError
 import company.surious.domain.extensions.safeOnSuccess
 import company.surious.domain.managers.LoginManager
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.SingleEmitter
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.SingleEmitter
 
 
 class GoogleLoginManager(

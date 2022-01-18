@@ -5,7 +5,7 @@
 
         <variable
             name="treePoint"
-            type="androidx.lifecycle.LiveData&lt;company.surious.domain.entities.TreePoint>" />
+            type="androidx.lifecycle.LiveData&lt;company.surious.domain.entities.plants.TreePoint>" />
 
         <variable
             name="eventHandler"

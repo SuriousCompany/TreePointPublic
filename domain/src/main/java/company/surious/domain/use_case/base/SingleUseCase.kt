@@ -1,8 +1,8 @@
 package company.surious.domain.use_case.base
 
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 abstract class SingleUseCase<Params, Result> {
     protected abstract fun createSingle(params: Params): Single<Result>

@@ -1,8 +1,7 @@
 package company.surious.domain.extensions
 
-import io.reactivex.*
-import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Function
+import io.reactivex.rxjava3.core.*
+import io.reactivex.rxjava3.disposables.Disposable
 
 //Observable:
 fun ObservableEmitter<*>.isActive() = !isDisposed
@@ -38,10 +37,10 @@ fun <T : Any> Observable<T>.emitEverythingTo(emitter: ObservableEmitter<T>): Dis
         })
 
 fun <T : Any> Observable<T>.mapErrors(function: (Throwable) -> Throwable) =
-    onErrorResumeNext(Function { error -> Observable.error(function.invoke(error)) })
+    onErrorResumeNext { error -> Observable.error(function.invoke(error)) }
 
 fun <T : Any> Observable<T>.mapErrors(error: Throwable) =
-    onErrorResumeNext(Observable.error(error))
+    onErrorResumeNext { Observable.error(error) }
 
 //Single:
 fun SingleEmitter<*>.isActive() = !isDisposed
@@ -59,10 +58,10 @@ fun SingleEmitter<*>.safeOnError(error: Throwable) {
 }
 
 fun <T : Any> Single<T>.mapErrors(function: (Throwable) -> Throwable) =
-    onErrorResumeNext(Function { error -> Single.error(function.invoke(error)) })
+    onErrorResumeNext { error -> Single.error(function.invoke(error)) }
 
 fun <T : Any> Single<T>.mapErrors(error: Throwable) =
-    onErrorResumeNext(Single.error(error))
+    onErrorResumeNext { Single.error(error) }
 
 //Maybe:
 fun MaybeEmitter<*>.isActive() = !isDisposed
@@ -96,10 +95,10 @@ fun <T : Any> Maybe<T>.toSingle(error: Throwable) =
     }
 
 fun <T : Any> Maybe<T>.mapErrors(function: (Throwable) -> Throwable) =
-    onErrorResumeNext(Function { error -> Maybe.error(function.invoke(error)) })
+    onErrorResumeNext { error -> Maybe.error(function.invoke(error)) }
 
 fun <T : Any> Maybe<T>.mapErrors(error: Throwable) =
-    onErrorResumeNext(Maybe.error(error))
+    onErrorResumeNext { Maybe.error(error) }
 
 
 //Completable

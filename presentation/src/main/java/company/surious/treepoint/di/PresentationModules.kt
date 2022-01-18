@@ -4,6 +4,8 @@ import company.surious.treepoint.ui.common.providers.TextResourcesProvider
 import company.surious.treepoint.ui.common.view_models.CheckCurrentUserViewModel
 import company.surious.treepoint.ui.common.view_models.LoginViewModel
 import company.surious.treepoint.ui.common.view_models.RegistrationViewModel
+import company.surious.treepoint.ui.common.view_models.identification.IdentificationUsageInfoViewModel
+import company.surious.treepoint.ui.common.view_models.identification.IdentificationViewModel
 import company.surious.treepoint.ui.common.view_models.photos.TreePointPhotosViewModel
 import company.surious.treepoint.ui.common.view_models.photos.UploadPhotosViewModel
 import company.surious.treepoint.ui.common.view_models.tree_point.AllTreePointsViewModel
@@ -26,6 +28,8 @@ object PresentationModules {
         viewModel { CreateTreePointViewModel(get()) }
         viewModel { UploadPhotosViewModel(get()) }
         viewModel { TreePointPhotosViewModel(get()) }
+        viewModel { IdentificationUsageInfoViewModel(get()) }
+        viewModel { IdentificationViewModel(get()) }
     }
 
     val PROVIDERS = module {

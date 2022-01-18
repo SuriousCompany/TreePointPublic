@@ -14,8 +14,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import company.surious.domain.entities.TreePointDraft
-import company.surious.domain.entities.TreeType
+import company.surious.domain.entities.plants.TreePointDraft
+import company.surious.domain.entities.plants.TreeType
 import company.surious.domain.logging.logNavigation
 import company.surious.domain.preferences.UserPreferences
 import company.surious.treepoint.R

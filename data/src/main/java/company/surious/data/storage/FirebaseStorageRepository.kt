@@ -7,9 +7,9 @@ import company.surious.domain.extensions.safeOnComplete
 import company.surious.domain.extensions.safeOnError
 import company.surious.domain.extensions.safeOnSuccess
 import company.surious.domain.repositories.CloudStorageRepository
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.disposables.Disposables
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.disposables.Disposable
 
 class FirebaseStorageRepository(private val storage: FirebaseStorage) : CloudStorageRepository {
     private val treePointsReference by lazy {
@@ -26,7 +26,7 @@ class FirebaseStorageRepository(private val storage: FirebaseStorage) : CloudSto
                 }.addOnSuccessListener { taskSnapshot ->
                     emitter.safeOnComplete()
                 }
-            emitter.setDisposable(Disposables.fromAction { task.cancel() })
+            emitter.setDisposable(Disposable.fromAction { task.cancel() })
         }
     }
 

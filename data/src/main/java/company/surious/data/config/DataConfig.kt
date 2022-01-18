@@ -8,5 +8,7 @@ class DataConfig {
         }
 
         external fun getWebClientId(): String
+
+        external fun getPlantIdToken(): String
     }
 }

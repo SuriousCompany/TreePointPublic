@@ -1,7 +1,7 @@
 package company.surious.treepoint.ui.common.view_models.tree_type
 
 import androidx.lifecycle.LiveData
-import company.surious.domain.entities.TreeType
+import company.surious.domain.entities.plants.TreeType
 import company.surious.domain.use_case.tree_type.GetAllTreeTypesUseCase
 import company.surious.domain.use_case.tree_type.ObserveAllTreeTypesUseCase
 import company.surious.treepoint.ui.common.view_models.base.ObservableViewModel

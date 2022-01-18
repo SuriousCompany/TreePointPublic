@@ -20,7 +20,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.*
-import company.surious.domain.entities.TreePoint
+import company.surious.domain.entities.plants.TreePoint
 import company.surious.domain.logging.logNavigation
 import company.surious.domain.preferences.UserPreferences
 import company.surious.treepoint.R
@@ -140,7 +140,7 @@ class TreeMapFragment : BaseMapFragment() {
             { treePoints ->
                 treePoints.forEach {
                     val marker = googleMap.addMarker(createTreePointMarker(it))
-                    marker.tag = it.id
+                    marker!!.tag = it.id
                 }
             })
         allTreePointsViewModel.startObserving()

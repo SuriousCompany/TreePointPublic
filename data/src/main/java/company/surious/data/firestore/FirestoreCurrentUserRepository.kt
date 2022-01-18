@@ -3,13 +3,13 @@ package company.surious.data.firestore
 import com.google.firebase.firestore.FirebaseFirestore
 import company.surious.data.extensions.getAsyncMaybe
 import company.surious.data.extensions.setAsync
-import company.surious.domain.entities.RegisteredUser
+import company.surious.domain.entities.users.RegisteredUser
 import company.surious.domain.errors.DetailedFirestoreError
 import company.surious.domain.extensions.mapErrors
 import company.surious.domain.repositories.CurrentUserRepository
-import io.reactivex.Completable
-import io.reactivex.Maybe
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
 
 //TODO use SimpleCollectionRepository
 class FirestoreCurrentUserRepository(

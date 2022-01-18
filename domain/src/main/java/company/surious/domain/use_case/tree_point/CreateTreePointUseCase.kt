@@ -1,14 +1,14 @@
 package company.surious.domain.use_case.tree_point
 
-import company.surious.domain.entities.RegisteredUser
-import company.surious.domain.entities.TreePoint
-import company.surious.domain.entities.TreePointDraft
+import company.surious.domain.entities.plants.TreePoint
+import company.surious.domain.entities.plants.TreePointDraft
+import company.surious.domain.entities.users.RegisteredUser
 import company.surious.domain.errors.PreferencesError
 import company.surious.domain.preferences.InnerPreferences
 import company.surious.domain.repositories.CurrentUserRepository
 import company.surious.domain.repositories.TreePointRepository
 import company.surious.domain.use_case.base.SingleUseCase
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 class CreateTreePointUseCase(
     private val currentUserRepository: CurrentUserRepository,
@@ -21,7 +21,7 @@ class CreateTreePointUseCase(
         return if (currentUserId != null) {
             currentUserRepository.getCurrentUser(currentUserId).flatMapSingle { user ->
                 treePointRepository.createTreePoint(createTreePoint(user, params))
-            }
+            }.toSingle()
         } else {
             Single.error(PreferencesError(customMessage = "User id is not initialized"))
         }

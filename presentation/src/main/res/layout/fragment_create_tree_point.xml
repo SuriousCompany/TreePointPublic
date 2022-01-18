@@ -9,7 +9,7 @@
 
         <variable
             name="treeTypes"
-            type="androidx.lifecycle.LiveData&lt;java.util.List&lt;company.surious.domain.entities.TreeType>>" />
+            type="androidx.lifecycle.LiveData&lt;java.util.List&lt;company.surious.domain.entities.plants.TreeType>>" />
 
         <variable
             name="isLoading"
@@ -27,7 +27,7 @@
             name="comment"
             type="androidx.lifecycle.MutableLiveData&lt;String>" />
 
-        <import type="company.surious.domain.entities.TreeType" />
+        <import type="company.surious.domain.entities.plants.TreeType" />
 
         <import type="kotlin.Pair" />
 

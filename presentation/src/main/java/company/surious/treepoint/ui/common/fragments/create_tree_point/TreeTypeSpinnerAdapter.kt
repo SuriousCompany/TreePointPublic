@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import company.surious.domain.entities.TreeType
+import company.surious.domain.entities.plants.TreeType
 import company.surious.treepoint.R
 import company.surious.treepoint.ui.common.custom_views.base_spinner.BaseSpinnerAdapter
 

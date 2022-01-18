@@ -5,19 +5,21 @@ allprojects {
     }
 }
 ext {
+    app_compat_version = '1.4.1'
     navigation_version = '2.3.5'
-    material_version = '1.4.0'
+    material_version = '1.5.0'
     androidx_legacy_version = '1.0.0'
-    ktx_fragment_version = '1.3.6'
-    ktx_viewmodel_version = '2.3.1'
+    ktx_fragment_version = '1.4.0'
+    ktx_viewmodel_version = '2.4.0'
     swiperefreshlayout_version = '1.1.0'
-    constraintlayout_version = '2.0.4'
+    constraintlayout_version = '2.1.2'
     recyclerview_version = '1.2.1'
-    play_services_maps_version = '17.0.1'
-    play_services_location_version = '18.0.0'
+    play_services_maps_version = '18.0.2'
+    play_services_location_version = '19.0.1'
     glide_version = '4.12.0'
 
     presentationCore = [
+            "androidx.appcompat:appcompat:$app_compat_version",
             "androidx.legacy:legacy-support-v4:$androidx_legacy_version",
             "androidx.fragment:fragment-ktx:$ktx_fragment_version",
             "androidx.lifecycle:lifecycle-viewmodel-ktx:$ktx_viewmodel_version"

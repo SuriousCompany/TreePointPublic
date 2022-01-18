@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
-import company.surious.domain.entities.RegisteredUser
+import company.surious.domain.entities.users.RegisteredUser
 import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.ActivityMainBinding

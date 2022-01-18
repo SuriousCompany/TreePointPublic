@@ -7,7 +7,7 @@ import company.surious.domain.errors.DetailedFirestoreError
 import company.surious.domain.errors.NotUniqueUsernameError
 import company.surious.domain.extensions.mapErrors
 import company.surious.domain.repositories.UserNameRepository
-import io.reactivex.Completable
+import io.reactivex.rxjava3.core.Completable
 
 class FirestoreUserNameRepository(private val firebaseFirestore: FirebaseFirestore) :
     UserNameRepository {

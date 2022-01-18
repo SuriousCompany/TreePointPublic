@@ -2,7 +2,7 @@ package company.surious.treepoint.ui.common.view_models
 
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
-import company.surious.domain.entities.LoggedInUser
+import company.surious.domain.entities.users.LoggedInUser
 import company.surious.domain.logging.logFlow
 import company.surious.domain.use_case.auth.GetCurrentUserUseCase
 import company.surious.domain.use_case.auth.GetLoginIntentUseCase

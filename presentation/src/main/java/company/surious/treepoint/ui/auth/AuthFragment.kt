@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import company.surious.domain.entities.RegisteredUser
+import company.surious.domain.entities.users.RegisteredUser
 import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.MainNavigationDirections
 import company.surious.treepoint.R

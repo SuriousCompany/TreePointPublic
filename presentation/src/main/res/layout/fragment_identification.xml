@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="usageInfo"
+            type="androidx.lifecycle.LiveData&lt;company.surious.domain.entities.identification.IdentificationUsageInfo>" />
+
+        <variable
+            name="isLoading"
+            type="androidx.lifecycle.LiveData&lt;Boolean>" />
+
+        <variable
+            name="healthAssessmentMode"
+            type="androidx.lifecycle.MutableLiveData&lt;company.surious.domain.entities.identification.HealthAssessmentMode>" />
+
+        <variable
+            name="eventHandler"
+            type="company.surious.treepoint.ui.common.fragments.identification.IdentificationFragment.IdentificationFragmentEventHandler" />
+
+        <variable
+            name="identificationResult"
+            type="androidx.lifecycle.LiveData&lt;company.surious.domain.entities.identification.result.IdentificationResult>" />
+
+        <import type="company.surious.treepoint.ui.common.fragments.identification.HealthAssessmentBindingHelper" />
+
+        <import type="company.surious.treepoint.ui.common.fragments.identification.HealthAssessmentBindingConverter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.common.fragments.identification.IdentificationFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/leftGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/rightGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/topGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottomGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="16dp" />
+
+        <TextView
+            android:id="@+id/creditsTextView"
+            setVisibility="@{!isLoading}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.format(@string/credits_placeholder,usageInfo.remainingTotal)}"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintTop_toTopOf="@id/topGuideline"
+            tools:text="200 credits" />
+
+        <TextView
+            android:id="@+id/identificationModeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/health_assessment_mode"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@id/creditsTextView" />
+
+        <SeekBar
+            android:id="@+id/healthAssessmentSeekBar"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/transparentBlack"
+            android:max="2"
+            android:progress="@={HealthAssessmentBindingConverter.INSTANCE.convertHealthIdentificationModeToInt(healthAssessmentMode)}"
+            android:progressDrawable="@{HealthAssessmentBindingHelper.INSTANCE.mapSeekBarBackground(context, healthAssessmentMode)}"
+            android:thumb="@{HealthAssessmentBindingHelper.INSTANCE.mapSeekBarThumb(context, healthAssessmentMode)}"
+            app:layout_constraintBottom_toBottomOf="@id/selectedHealthAssessmentModeTextView"
+            app:layout_constraintEnd_toEndOf="@id/identificationModeLabel"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toTopOf="@id/selectedHealthAssessmentModeTextView"
+            tools:progress="1" />
+
+        <TextView
+            android:id="@+id/selectedHealthAssessmentModeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/transparentBlack"
+            android:gravity="center"
+            android:paddingVertical="8dp"
+            android:text="@{HealthAssessmentBindingHelper.INSTANCE.mapText(context, healthAssessmentMode)}"
+            android:textColor="@{HealthAssessmentBindingHelper.INSTANCE.mapColor(context, healthAssessmentMode)}"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintStart_toEndOf="@id/healthAssessmentSeekBar"
+            app:layout_constraintTop_toBottomOf="@id/identificationModeLabel"
+            tools:text="Auto"
+            tools:textColor="@color/yellowAccent" />
+
+        <Button
+            android:id="@+id/identifyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/yellowAccent"
+            android:onClick="@{()->eventHandler.onIdentifyButtonClicked()}"
+            android:text="@string/identify"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selectedHealthAssessmentModeTextView" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/bottomGuideline"
+            app:layout_constraintEnd_toEndOf="@id/rightGuideline"
+            app:layout_constraintStart_toStartOf="@id/leftGuideline"
+            app:layout_constraintTop_toBottomOf="@id/identifyButton">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                setVisibility="@{identificationResult!=null}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/isPlantLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Is plant:"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/isPlantTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{identificationResult.plant+``}"
+                    android:textColor="@color/black"
+                    app:layout_constraintBaseline_toBaselineOf="@id/isPlantLabel"
+                    app:layout_constraintStart_toEndOf="@id/isPlantLabel"
+                    tools:text="true" />
+
+                <TextView
+                    android:id="@+id/isPlantProbabilityLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Is plant probability:"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/isPlantLabel" />
+
+                <TextView
+                    android:id="@+id/isPlantProbability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{identificationResult.isPlantProbability()+``}"
+                    android:textColor="@color/black"
+                    app:layout_constraintBaseline_toBaselineOf="@id/isPlantProbabilityLabel"
+                    app:layout_constraintStart_toEndOf="@id/isPlantProbabilityLabel"
+                    tools:text="0.9" />
+
+                <TextView
+                    android:id="@+id/isPlantHealthyLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Is plant healthy:"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/isPlantProbabilityLabel" />
+
+                <TextView
+                    android:id="@+id/isPlantHealthyTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@{identificationResult.healthAssessment.healthy+``}"
+                    android:textColor="@color/black"
+                    app:layout_constraintBaseline_toBaselineOf="@id/isPlantHealthyLabel"
+                    app:layout_constraintStart_toEndOf="@id/isPlantHealthyLabel"
+                    tools:text="true" />
+
+                <TextView
+                    android:id="@+id/isPlantHealthyProbabilityLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Is plant healthy probability:"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/isPlantHealthyLabel" />
+
+                <TextView
+                    android:id="@+id/isPlantHealthyProbabilityTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@{identificationResult.healthAssessment.healthProbability+``}"
+                    android:textColor="@color/black"
+                    app:layout_constraintBaseline_toBaselineOf="@id/isPlantHealthyProbabilityLabel"
+                    app:layout_constraintStart_toEndOf="@id/isPlantHealthyProbabilityLabel"
+                    tools:text="0.9" />
+
+                <TextView
+                    android:id="@+id/identificationSuggestionsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Identification suggestions:"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/isPlantHealthyProbabilityLabel" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/suggestionsRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/identificationSuggestionsLabel" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <include
+            layout="@layout/layout_loading"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible="@{isLoading}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

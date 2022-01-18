@@ -2,15 +2,15 @@ package company.surious.data.firestore
 
 import com.google.firebase.firestore.FirebaseFirestore
 import company.surious.data.extensions.*
-import company.surious.data.mappers.Mapper
+import company.surious.data.firestore.mappers.Mapper
 import company.surious.domain.errors.DetailedFirestoreError
 import company.surious.domain.errors.FirestoreError
 import company.surious.domain.extensions.mapErrors
 import company.surious.domain.types.Identifiable
-import io.reactivex.Completable
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import kotlin.reflect.KClass
 
 abstract class SimpleCollectionRepository<FirestoreModel : Any, Entity : Identifiable<String>>(
@@ -23,13 +23,13 @@ abstract class SimpleCollectionRepository<FirestoreModel : Any, Entity : Identif
     fun create(item: Entity): Single<String> {
         val newDocument = firebaseFirestore.collection(collectionName).document()
         item.id = newDocument.id
-        return newDocument.setAsync(mapper.mapToFirestoreModel(item))
+        return newDocument.setAsync(mapper.mapToDataModel(item))
             .mapErrors { error -> mapFirestoreError(error, item.id) }.toSingleDefault(item.id)
     }
 
     fun update(item: Entity): Completable {
         return firebaseFirestore.collection(collectionName).document(item.id)
-            .setAsync(mapper.mapToFirestoreModel(item))
+            .setAsync(mapper.mapToDataModel(item))
             .mapErrors { error -> mapFirestoreError(error, item.id) }
     }
 

@@ -18,6 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/TreePoint">
+        <activity
+            android:name=".ui.common.activities.WebViewActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -35,18 +39,21 @@
 
         <activity
             android:name=".ui.common.activities.AboutActivity"
-            android:exported="true" />
-
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.auth.AuthActivity" />
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import company.surious.domain.entities.TreePoint
+import company.surious.domain.entities.plants.TreePoint
 import company.surious.domain.logging.logNavigation
 import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentDisplayTreePointBinding

@@ -1,7 +1,7 @@
 package company.surious.treepoint.ui.common.view_models.tree_point
 
 import androidx.lifecycle.MutableLiveData
-import company.surious.domain.entities.TreePointDraft
+import company.surious.domain.entities.plants.TreePointDraft
 import company.surious.domain.logging.logUnhandledError
 import company.surious.domain.use_case.tree_point.CreateTreePointUseCase
 import company.surious.treepoint.ui.common.view_models.base.LoadingViewModel

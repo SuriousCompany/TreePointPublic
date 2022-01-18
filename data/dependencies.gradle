@@ -7,11 +7,20 @@ allprojects {
 
 ext {
     firebase_auth_version = '21.0.1'
-    firebase_firestore_version = '23.0.3'
+    firebase_firestore_version = '24.0.0'
     firebase_storage_version = '20.0.0'
+    retrofit_version = '2.9.0'
+    okhttp_logging_interceptor_version = '5.0.0-alpha.3'
+
     dataFirebase = [
             "com.google.firebase:firebase-auth-ktx:$firebase_auth_version",
             "com.google.firebase:firebase-firestore:$firebase_firestore_version",
             "com.google.firebase:firebase-storage-ktx:$firebase_storage_version"
+    ]
+    dataRetrofit = [
+            "com.squareup.retrofit2:retrofit:$retrofit_version",
+            "com.squareup.retrofit2:converter-gson:$retrofit_version",
+            "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version",
+            "com.squareup.okhttp3:logging-interceptor:$okhttp_logging_interceptor_version"
     ]
 }

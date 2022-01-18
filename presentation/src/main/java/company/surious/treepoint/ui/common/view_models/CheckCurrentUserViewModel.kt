@@ -1,7 +1,7 @@
 package company.surious.treepoint.ui.common.view_models
 
 import androidx.lifecycle.MutableLiveData
-import company.surious.domain.entities.RegisteredUser
+import company.surious.domain.entities.users.RegisteredUser
 import company.surious.domain.logging.logFlow
 import company.surious.domain.preferences.InnerPreferences
 import company.surious.domain.use_case.auth.GetCurrentUserUseCase

@@ -1,9 +1,9 @@
 package company.surious.domain.repositories
 
-import company.surious.domain.entities.TreePoint
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
+import company.surious.domain.entities.plants.TreePoint
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 interface TreePointRepository {
     fun createTreePoint(treePoint: TreePoint): Single<String>

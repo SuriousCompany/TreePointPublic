@@ -1,14 +1,14 @@
 package company.surious.data.firestore
 
 import com.google.firebase.firestore.FirebaseFirestore
-import company.surious.data.mappers.Mapper
-import company.surious.data.mappers.TreePointMapper
-import company.surious.data.models.FirestoreTreePoint
-import company.surious.domain.entities.TreePoint
+import company.surious.data.firestore.mappers.Mapper
+import company.surious.data.firestore.mappers.TreePointMapper
+import company.surious.data.firestore.models.FirestoreTreePoint
+import company.surious.domain.entities.plants.TreePoint
 import company.surious.domain.repositories.TreePointRepository
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 class FirestoreTreePointRepository(firebaseFirestore: FirebaseFirestore) :
     SimpleCollectionRepository<FirestoreTreePoint, TreePoint>(firebaseFirestore),

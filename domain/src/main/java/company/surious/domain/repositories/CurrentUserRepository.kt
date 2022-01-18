@@ -1,9 +1,9 @@
 package company.surious.domain.repositories
 
-import company.surious.domain.entities.RegisteredUser
-import io.reactivex.Completable
-import io.reactivex.Maybe
-import io.reactivex.Observable
+import company.surious.domain.entities.users.RegisteredUser
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
 
 interface CurrentUserRepository {
 

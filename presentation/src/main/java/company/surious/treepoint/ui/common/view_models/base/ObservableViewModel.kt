@@ -2,7 +2,7 @@ package company.surious.treepoint.ui.common.view_models.base
 
 import company.surious.domain.logging.logUnhandledError
 import company.surious.domain.use_case.base.ObservableUseCase
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.disposables.Disposable
 
 abstract class ObservableViewModel<Request, Data> : RefreshingViewModel<Request, Data>() {
     protected abstract val observableUseCase: ObservableUseCase<Request, Data>
