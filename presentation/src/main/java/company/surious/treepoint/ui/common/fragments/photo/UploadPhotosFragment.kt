@@ -46,8 +46,6 @@ class UploadPhotosFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
                 onPermissionGranted()
-            } else {
-                logVerbose("", "")//TODO
             }
         }
     private val photoLauncher =
