@@ -8,7 +8,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import company.surious.data.extensions.signOutAsync
-import company.surious.data.firestore.mappers.LoggedInUserMapper
+import company.surious.data.firestore.mappers.FirestoreLoggedInUserMapper
 import company.surious.domain.entities.users.LoggedInUser
 import company.surious.domain.errors.LoginError
 import company.surious.domain.extensions.mapErrors
@@ -29,7 +29,7 @@ class GoogleLoginManager(
         get() = signInClient.signInIntent
 
     override val currentUser: LoggedInUser?
-        get() = firebaseAuth.currentUser?.let { LoggedInUserMapper.map(it) }
+        get() = firebaseAuth.currentUser?.let { FirestoreLoggedInUserMapper.map(it) }
 
     override fun login(intent: Intent) =
         Single.create<LoggedInUser> { emitter ->
@@ -77,7 +77,7 @@ class GoogleLoginManager(
         if (user != null) {
             val email = user.email
             if (email != null) {
-                emitter.safeOnSuccess(LoggedInUserMapper.map(user))
+                emitter.safeOnSuccess(FirestoreLoggedInUserMapper.map(user))
             } else {
                 emitter.safeOnError(
                     LoginError(customMessage = "User email is null")

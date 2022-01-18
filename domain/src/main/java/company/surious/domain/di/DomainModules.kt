@@ -42,6 +42,8 @@ object DomainModules {
         //Identification:
         factory { GetUsageInfoUseCase(get()) }
         factory { IdentifyUseCase(get()) }
+        //Plant details
+        factory { SavePlantDetailsUseCase(get()) }
     }
 
     val ASSEMBLERS = module {

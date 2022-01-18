@@ -8,19 +8,26 @@ import company.surious.domain.entities.identification.HealthAssessmentMode
 import company.surious.domain.entities.identification.IdentificationAccuracy
 import company.surious.domain.entities.identification.IdentificationRequest
 import company.surious.domain.entities.identification.result.IdentificationResult
+import company.surious.domain.entities.identification.result.IdentificationSuggestion
+import company.surious.domain.entities.identification.result.details.PlantDetails
 import company.surious.domain.extensions.safeOnError
 import company.surious.domain.extensions.safeOnSuccess
 import company.surious.domain.logging.logUnhandledError
 import company.surious.domain.use_case.identification.IdentifyUseCase
+import company.surious.domain.use_case.tree_point.SavePlantDetailsUseCase
 import company.surious.treepoint.ui.common.glide.ImageUtils
 import company.surious.treepoint.ui.common.view_models.base.LoadingViewModel
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class IdentificationViewModel(private val identifyUseCase: IdentifyUseCase) : LoadingViewModel() {
+class IdentificationViewModel(
+    private val identifyUseCase: IdentifyUseCase,
+    private val savePlantDetailsUseCase: SavePlantDetailsUseCase
+) : LoadingViewModel() {
     override var isLoadingByDefault: Boolean = false
 
     private val identificationSource = MutableLiveData<IdentificationResult>()
+    private val newDetailsSource = MutableLiveData<Int>()
 
     val identificationResult = identificationSource as LiveData<IdentificationResult>
 
@@ -46,9 +53,12 @@ class IdentificationViewModel(private val identifyUseCase: IdentifyUseCase) : Lo
                     disposables.add(
                         identifyUseCase.execute(request).subscribe(
                             { identificationResult ->
-                                isLoading.value = false
                                 identificationSource.value = identificationResult
-
+                                savePlantDetails(
+                                    identificationResult.suggestions.map(
+                                        IdentificationSuggestion::plantDetails
+                                    )
+                                )
                             },
                             {
                                 logUnhandledError(it, "identification error")
@@ -62,7 +72,19 @@ class IdentificationViewModel(private val identifyUseCase: IdentifyUseCase) : Lo
 
     }
 
-    //TODO move it to data layer
+    private fun savePlantDetails(details: List<PlantDetails>) {
+        disposables.add(savePlantDetailsUseCase.execute(details).subscribe(
+            { newDetailsCount ->
+                isLoading.value = false
+                newDetailsSource.value = newDetailsCount
+            },
+            {
+                logUnhandledError(it, "saving plant details error")
+            }
+        ))
+    }
+
+    //TODO move it to the data layer
     private fun encodeImages(
         contentResolver: ContentResolver,
         photos: List<Uri>

@@ -23,6 +23,7 @@ sealed class FirestoreError(
     override val customMessage: String? = null
 ) : CommunicationError(cause, customMessage)
 
+//TODO add a separate error message. Make colection and document optional
 class DetailedFirestoreError(
     override val cause: Throwable? = null,
     collectionName: String,

@@ -3,7 +3,7 @@ package company.surious.data.firestore.mappers
 import company.surious.data.firestore.models.FirestoreTreeType
 import company.surious.domain.entities.plants.TreeType
 
-object TreeTypeMapper : Mapper<FirestoreTreeType, TreeType> {
+object FirestoreTreeTypeMapper : Mapper<FirestoreTreeType, TreeType> {
 
     override fun mapToEntity(model: FirestoreTreeType) =
         with(model) {

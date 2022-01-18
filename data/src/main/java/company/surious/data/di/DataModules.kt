@@ -8,10 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import company.surious.data.config.DataConfig
-import company.surious.data.firestore.FirestoreCurrentUserRepository
-import company.surious.data.firestore.FirestoreTreePointRepository
-import company.surious.data.firestore.FirestoreTreeTypeRepository
-import company.surious.data.firestore.FirestoreUserNameRepository
+import company.surious.data.firestore.*
 import company.surious.data.managers.GoogleLoginManager
 import company.surious.data.preferences.TreeSharedPreferences
 import company.surious.data.retrofit.HttpLogger
@@ -88,6 +85,7 @@ object DataModules {
         single<TreePointRepository> { FirestoreTreePointRepository(get()) }
         single<CloudStorageRepository> { FirebaseStorageRepository(get()) }
         single<IdentificationRepository> { RetrofitIdentificationRepository(get()) }
+        single<PlantDetailsRepository> { FirestorePlantDetailsRepository(get()) }
     }
     val PREFERENCES = module {
         single<InnerPreferences> { TreeSharedPreferences(get()) }

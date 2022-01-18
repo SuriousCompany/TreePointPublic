@@ -5,7 +5,7 @@ import company.surious.data.firestore.models.FirestoreTreePoint
 import company.surious.domain.entities.plants.TreePoint
 import company.surious.domain.entities.plants.TreeType
 
-object TreePointMapper : Mapper<FirestoreTreePoint, TreePoint> {
+object FirestoreTreePointMapper : Mapper<FirestoreTreePoint, TreePoint> {
     override fun mapToEntity(model: FirestoreTreePoint): TreePoint =
         with(model) {
             TreePoint(

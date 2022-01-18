@@ -29,7 +29,7 @@ object PresentationModules {
         viewModel { UploadPhotosViewModel(get()) }
         viewModel { TreePointPhotosViewModel(get()) }
         viewModel { IdentificationUsageInfoViewModel(get()) }
-        viewModel { IdentificationViewModel(get()) }
+        viewModel { IdentificationViewModel(get(), get()) }
     }
 
     val PROVIDERS = module {

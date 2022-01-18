@@ -6,6 +6,6 @@ data class PlantCommonNames(
     val uk: List<String>?
 ) {
     override fun toString(): String {
-        return "eu: $eu\nru: $ru\nuk: $uk"
+        return "eu: ${eu?.joinToString()}\nru: ${ru?.joinToString()}\nuk: ${uk?.joinToString()}"
     }
 }

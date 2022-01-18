@@ -103,6 +103,37 @@ fun <T : Any> CollectionReference.getAll(clazz: KClass<T>) =
             .addOnFailureListener(emitter::safeOnError)
     }
 
+fun CollectionReference.addAsync(documents: Map<String, Any>): Single<List<String>> =
+    Single.create { emitter ->
+        val batch = firestore.batch()
+        documents.forEach {
+            val reference = document(it.key)
+            batch.set(reference, it.value)
+        }
+        batch.commit()
+            .addOnSuccessListener {
+                emitter.safeOnSuccess(documents.keys.toList())
+            }
+            .addOnFailureListener(emitter::safeOnError)
+    }
+
+fun CollectionReference.getDocumentsIdsAsync() =
+    Single.create<List<String>> { emitter ->
+        get()
+            .addOnSuccessListener { snapshot ->
+                if (!snapshot.isEmpty) {
+                    try {
+                        emitter.safeOnSuccess(snapshot.documents.map { it.id })
+                    } catch (error: Throwable) {
+                        emitter.safeOnError(error)
+                    }
+                } else {
+                    emitter.safeOnSuccess(emptyList())
+                }
+            }
+            .addOnFailureListener(emitter::safeOnError)
+    }
+
 fun <T : Any> CollectionReference.observe(clazz: KClass<T>) =
     Observable.create<List<T>> { emitter ->
         val listener = addSnapshotListener { value, error ->

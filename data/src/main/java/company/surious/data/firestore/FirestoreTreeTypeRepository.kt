@@ -1,8 +1,8 @@
 package company.surious.data.firestore
 
 import com.google.firebase.firestore.FirebaseFirestore
+import company.surious.data.firestore.mappers.FirestoreTreeTypeMapper
 import company.surious.data.firestore.mappers.Mapper
-import company.surious.data.firestore.mappers.TreeTypeMapper
 import company.surious.data.firestore.models.FirestoreTreeType
 import company.surious.domain.entities.plants.TreeType
 import company.surious.domain.repositories.TreeTypeRepository
@@ -15,7 +15,7 @@ class FirestoreTreeTypeRepository(firebaseFirestore: FirebaseFirestore) :
 
     override val collectionName: String = FirestoreContract.Collections.TREE_TYPES
     override val firestoreModelClass: KClass<FirestoreTreeType> = FirestoreTreeType::class
-    override val mapper: Mapper<FirestoreTreeType, TreeType> = TreeTypeMapper
+    override val mapper: Mapper<FirestoreTreeType, TreeType> = FirestoreTreeTypeMapper
 
     override fun getTreeType(id: String): Single<TreeType> = get(id)
 

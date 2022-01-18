@@ -14,23 +14,35 @@ import io.reactivex.rxjava3.core.Single
 import kotlin.reflect.KClass
 
 abstract class SimpleCollectionRepository<FirestoreModel : Any, Entity : Identifiable<String>>(
-    private val firebaseFirestore: FirebaseFirestore
+    protected val firebaseFirestore: FirebaseFirestore
 ) {
     protected abstract val collectionName: String
     protected abstract val firestoreModelClass: KClass<FirestoreModel>
     protected abstract val mapper: Mapper<FirestoreModel, Entity>
 
-    fun create(item: Entity): Single<String> {
+    fun createWithNewId(item: Entity): Single<String> {
         val newDocument = firebaseFirestore.collection(collectionName).document()
         item.id = newDocument.id
         return newDocument.setAsync(mapper.mapToDataModel(item))
-            .mapErrors { error -> mapFirestoreError(error, item.id) }.toSingleDefault(item.id)
+            .mapErrors { error -> mapFirestoreDetailedError(error, item.id) }
+            .toSingleDefault(item.id)
+    }
+
+    fun addAll(items: List<Entity>): Single<List<String>> {
+        val dataModels = items.map(mapper::mapToDataModel)
+        val documents = HashMap<String, FirestoreModel>()
+        dataModels.forEachIndexed { index, firestoreModel ->
+            documents[items[index].id] = firestoreModel
+        }
+        return firebaseFirestore.collection(collectionName)
+            .addAsync(documents)
+            .mapErrors { error -> mapFirestoreDetailedError(error, "add list") }
     }
 
     fun update(item: Entity): Completable {
         return firebaseFirestore.collection(collectionName).document(item.id)
             .setAsync(mapper.mapToDataModel(item))
-            .mapErrors { error -> mapFirestoreError(error, item.id) }
+            .mapErrors { error -> mapFirestoreDetailedError(error, item.id) }
     }
 
 
@@ -39,35 +51,35 @@ abstract class SimpleCollectionRepository<FirestoreModel : Any, Entity : Identif
             .document(id)
             .getAsync(firestoreModelClass)
             .map(mapper::mapToEntity)
-            .mapErrors { error -> mapFirestoreError(error, id) }
+            .mapErrors { error -> mapFirestoreDetailedError(error, id) }
 
     fun getNullable(id: String): Maybe<Entity> =
         firebaseFirestore.collection(collectionName)
             .document(id)
             .getAsyncMaybe(firestoreModelClass)
             .map(mapper::mapToEntity)
-            .mapErrors { error -> mapFirestoreError(error, id) }
+            .mapErrors { error -> mapFirestoreDetailedError(error, id) }
 
     fun observe(id: String): Observable<Entity> =
         firebaseFirestore.collection(collectionName)
             .document(id)
             .observe(firestoreModelClass)
             .map(mapper::mapToEntity)
-            .mapErrors { error -> mapFirestoreError(error, id) }
+            .mapErrors { error -> mapFirestoreDetailedError(error, id) }
 
     fun observe(): Observable<List<Entity>> =
         firebaseFirestore.collection(collectionName)
             .observe(firestoreModelClass)
             .map { list -> list.map(mapper::mapToEntity) }
-            .mapErrors { error -> mapFirestoreError(error, "observe all") }
+            .mapErrors { error -> mapFirestoreDetailedError(error, "observe all") }
 
     fun getAll(): Single<List<Entity>> =
         firebaseFirestore.collection(collectionName)
             .getAll(firestoreModelClass)
             .map { list -> list.map(mapper::mapToEntity) }
-            .mapErrors { error -> mapFirestoreError(error, "get all") }
+            .mapErrors { error -> mapFirestoreDetailedError(error, "get all") }
 
-    private fun mapFirestoreError(
+    private fun mapFirestoreDetailedError(
         mainError: Throwable,
         documentId: String
     ) =
@@ -76,5 +88,4 @@ abstract class SimpleCollectionRepository<FirestoreModel : Any, Entity : Identif
         } else {
             DetailedFirestoreError(mainError, collectionName, documentId)
         }
-
 }

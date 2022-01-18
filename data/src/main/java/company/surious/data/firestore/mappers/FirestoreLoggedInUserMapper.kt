@@ -3,7 +3,7 @@ package company.surious.data.firestore.mappers
 import com.google.firebase.auth.FirebaseUser
 import company.surious.domain.entities.users.LoggedInUser
 
-object LoggedInUserMapper {
+object FirestoreLoggedInUserMapper {
     /**
      * Firebase user should be checked. Email cannot be null.
      * @param user

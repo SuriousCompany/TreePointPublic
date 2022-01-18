@@ -6,5 +6,6 @@ object FirestoreContract {
         const val USER_NAMES = "user_names"
         const val TREE_TYPES = "tree_types"
         const val TREE_POINTS = "tree_points"
+        const val PLANT_DETAILS = "plant_details"
     }
 }

@@ -1,5 +1,7 @@
 package company.surious.domain.entities.identification.result.details
 
+import company.surious.domain.types.Identifiable
+
 data class PlantDetails(
     val commonNames: PlantCommonNames,
     val wikiDescriptions: PlantWikiDescriptions,
@@ -11,4 +13,6 @@ data class PlantDetails(
     val urls: PlantUrls,
     val scientificName: String,
     val structuredName: PlantStructuredName
-)
+) : Identifiable<String> {
+    override var id: String = gbifId.toString()
+}
