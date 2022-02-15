@@ -2,8 +2,8 @@ package company.surious.data.firestore.mappers
 
 import com.google.firebase.firestore.GeoPoint
 import company.surious.data.firestore.models.FirestoreTreePoint
+import company.surious.domain.entities.identification.result.details.PlantDetails
 import company.surious.domain.entities.plants.TreePoint
-import company.surious.domain.entities.plants.TreeType
 
 object FirestoreTreePointMapper : Mapper<FirestoreTreePoint, TreePoint> {
     override fun mapToEntity(model: FirestoreTreePoint): TreePoint =
@@ -17,7 +17,7 @@ object FirestoreTreePointMapper : Mapper<FirestoreTreePoint, TreePoint> {
                 ripeStartMonth,
                 ripeEndMonth,
                 creatorComment,
-                TreeType(typeId),
+                PlantDetails(gbifId = plantDetailsId),
                 isVerified,
                 verifiedBy,
                 creationDate,
@@ -36,7 +36,8 @@ object FirestoreTreePointMapper : Mapper<FirestoreTreePoint, TreePoint> {
                 ripeStartMonth,
                 ripeEndMonth,
                 creatorComment,
-                type.id,
+                plant.gbifId,
+                plant.getName(),
                 isVerified,
                 verifiedBy,
                 creationDate,

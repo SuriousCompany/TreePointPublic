@@ -1,6 +1,7 @@
 package company.surious.domain.entities.plants
 
 import android.os.Parcelable
+import company.surious.domain.entities.identification.result.details.PlantDetails
 import company.surious.domain.types.Identifiable
 import kotlinx.parcelize.Parcelize
 
@@ -14,7 +15,7 @@ data class TreePoint(
     var ripeStartMonth: Int = -1,
     var ripeEndMonth: Int = -1,
     var creatorComment: String = "",
-    var type: TreeType = TreeType(),
+    var plant: PlantDetails = PlantDetails(),
     var isVerified: Boolean = false,
     var verifiedBy: String? = null,
     var creationDate: Long = -1,
@@ -24,4 +25,5 @@ data class TreePoint(
 
     val hasRipeSeason: Boolean
         get() = ripeStartMonth != -1 || ripeEndMonth != -1
+
 }

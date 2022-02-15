@@ -3,8 +3,8 @@ package company.surious.data.retrofit.model.response.identification.details
 import com.google.gson.annotations.SerializedName
 
 data class RetrofitPlantCommonNames(
-    @SerializedName("eu")
-    val eu: List<String>?,
+    @SerializedName("en")
+    val en: List<String>?,
     @SerializedName("ru")
     val ru: List<String>?,
     @SerializedName("uk")

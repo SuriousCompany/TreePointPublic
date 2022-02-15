@@ -7,5 +7,5 @@ data class IdentificationRequest(
     val accuracy: IdentificationAccuracy,
     val lat: Float? = null,
     val lng: Float? = null,
-    val requestSimilarImages: Boolean = false
+    val requestSimilarImages: Boolean = true
 )

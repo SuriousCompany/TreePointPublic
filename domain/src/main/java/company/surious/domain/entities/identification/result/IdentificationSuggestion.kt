@@ -7,5 +7,6 @@ data class IdentificationSuggestion(
     val plantName: String,
     val plantDetails: PlantDetails,
     val probability: Float,
-    val confirmed: Boolean
+    val confirmed: Boolean,
+    val images: List<IdentificationSuggestionImage>
 )

@@ -1,5 +1,6 @@
 package company.surious.domain.use_case.tree_point
 
+import company.surious.domain.entities.identification.result.details.PlantDetails
 import company.surious.domain.entities.plants.TreePoint
 import company.surious.domain.entities.plants.TreePointDraft
 import company.surious.domain.entities.users.RegisteredUser
@@ -40,7 +41,7 @@ class CreateTreePointUseCase(
                 ripeStartMonth,
                 ripeEndMonth,
                 creatorComment,
-                type,
+                PlantDetails(),
                 false,
                 null,
                 creationTime,

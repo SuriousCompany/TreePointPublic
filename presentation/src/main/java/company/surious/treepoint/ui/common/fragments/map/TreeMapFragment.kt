@@ -136,20 +136,19 @@ class TreeMapFragment : BaseMapFragment() {
     }
 
     private fun observeTreePoints(googleMap: GoogleMap) {
-        allTreePointsViewModel.treePoints.observe(viewLifecycleOwner,
-            { treePoints ->
-                treePoints.forEach {
-                    val marker = googleMap.addMarker(createTreePointMarker(it))
-                    marker!!.tag = it.id
-                }
-            })
+        allTreePointsViewModel.treePoints.observe(viewLifecycleOwner) { treePoints ->
+            treePoints.forEach {
+                val marker = googleMap.addMarker(createTreePointMarker(it))
+                marker!!.tag = it.id
+            }
+        }
         allTreePointsViewModel.startObserving()
     }
 
     private fun createTreePointMarker(treePoint: TreePoint) =
         MarkerOptions()
             .position(LatLng(treePoint.lat, treePoint.lng))
-            .title(treePoint.type.typeName)//TODO add localization
+            .title(treePoint.plant.getName())//TODO add localization
             .icon(appleIcon)
 
 

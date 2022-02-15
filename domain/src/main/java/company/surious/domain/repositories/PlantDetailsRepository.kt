@@ -12,5 +12,5 @@ interface PlantDetailsRepository {
 
     fun getAllPlantDetails(): Single<List<PlantDetails>>
 
-    //fun getPlantDetailsByName(name: String): List<PlantDetails>
+    fun getPlantDetailsById(id: Int): Single<PlantDetails>
 }

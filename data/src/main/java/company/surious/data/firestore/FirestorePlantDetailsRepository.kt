@@ -30,7 +30,8 @@ class FirestorePlantDetailsRepository(firebaseFirestore: FirebaseFirestore) :
             .subscribeOn(Schedulers.io())
             .flatMap { newDetails -> addAll(newDetails).map { it.size } }
 
-
     override fun getAllPlantDetails(): Single<List<PlantDetails>> = getAll()
+
+    override fun getPlantDetailsById(id: Int): Single<PlantDetails> = get(id.toString())
 
 }

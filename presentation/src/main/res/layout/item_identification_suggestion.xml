@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -7,55 +8,83 @@
         <variable
             name="suggestion"
             type="company.surious.domain.entities.identification.result.IdentificationSuggestion" />
+
+        <import type="company.surious.treepoint.ui.common.fragments.identification.IdentificationTextHelper" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:background="@color/white"
         android:padding="8dp">
 
+        <ImageView
+            android:id="@+id/firstSuggestionImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/probabilityPercentsLabel"
+            app:layout_constraintEnd_toStartOf="@id/contentGuidline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/probabilityPercentsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="3"
+            android:gravity="center"
+            android:text="@{IdentificationTextHelper.INSTANCE.getPercentsText(suggestion.probability)}"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/secondSuggestionImage"
+            app:layout_constraintEnd_toEndOf="@id/firstSuggestionImage"
+            app:layout_constraintStart_toStartOf="@id/firstSuggestionImage"
+            app:layout_constraintTop_toBottomOf="@id/firstSuggestionImage"
+            tools:text="69%" />
+
+        <ImageView
+            android:id="@+id/secondSuggestionImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/contentGuidline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/probabilityPercentsLabel"
+            tools:ignore="ContentDescription"
+            tools:src="@tools:sample/avatars" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/contentGuidline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+
         <TextView
             android:id="@+id/plantNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="Name:"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/contentGuidline"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/plantNameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{suggestion.plantName}"
             android:textColor="@color/black"
             app:layout_constraintBaseline_toBaselineOf="@id/plantNameLabel"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/plantNameLabel"
             tools:text="apple" />
-
-        <TextView
-            android:id="@+id/plantProbabilityLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Probability:"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/plantNameLabel" />
-
-        <TextView
-            android:id="@+id/plantProbabilityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@{suggestion.probability+``}"
-            android:textColor="@color/black"
-            app:layout_constraintBaseline_toBaselineOf="@id/plantProbabilityLabel"
-            app:layout_constraintStart_toEndOf="@id/plantProbabilityLabel"
-            tools:text="0.5" />
 
         <TextView
             android:id="@+id/plantCommonNamesLabel"
@@ -64,20 +93,20 @@
             android:layout_marginTop="8dp"
             android:text="Common names:"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/plantProbabilityLabel" />
+            app:layout_constraintStart_toStartOf="@id/plantNameLabel"
+            app:layout_constraintTop_toBottomOf="@id/plantNameLabel" />
 
         <TextView
             android:id="@+id/plantNamesTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:text="@{suggestion.plantDetails.commonNames+``}"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/plantNameLabel"
             app:layout_constraintTop_toBottomOf="@id/plantCommonNamesLabel"
-            tools:text="eu: apple\nru:яблоко\nuk:яблуко" />
+            tools:text="en: apple\nru:яблоко\nuk:яблуко" />
 
         <TextView
             android:id="@+id/ediblePartsLabel"
@@ -86,17 +115,18 @@
             android:layout_marginTop="8dp"
             android:text="Edible parts:"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/plantNameLabel"
             app:layout_constraintTop_toBottomOf="@id/plantNamesTextView" />
 
         <TextView
             android:id="@+id/ediblePartsTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{suggestion.plantDetails.edibleParts+``}"
             android:textColor="@color/black"
             app:layout_constraintBaseline_toBaselineOf="@id/ediblePartsLabel"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ediblePartsLabel"
             tools:text="flowers, etc" />
 
@@ -107,17 +137,18 @@
             android:layout_marginTop="8dp"
             android:text="Propagation methods:"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/plantNameLabel"
             app:layout_constraintTop_toBottomOf="@id/ediblePartsLabel" />
 
         <TextView
             android:id="@+id/propagationMethodsTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{suggestion.plantDetails.propagationMethods+``}"
             android:textColor="@color/black"
             app:layout_constraintBaseline_toBaselineOf="@id/propagationMethodsLabel"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/propagationMethodsLabel"
             tools:text="butt sex, etc" />
 
@@ -128,17 +159,18 @@
             android:layout_marginTop="8dp"
             android:text="Scientific name:"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/plantNameLabel"
             app:layout_constraintTop_toBottomOf="@id/propagationMethodsLabel" />
 
         <TextView
             android:id="@+id/scientificNameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{suggestion.plantDetails.scientificName}"
             android:textColor="@color/black"
             app:layout_constraintBaseline_toBaselineOf="@id/scientificNameLabel"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/scientificNameLabel"
             tools:text="scientific apple" />
     </androidx.constraintlayout.widget.ConstraintLayout>

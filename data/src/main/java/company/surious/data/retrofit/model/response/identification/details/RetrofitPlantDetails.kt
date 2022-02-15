@@ -16,7 +16,7 @@ data class RetrofitPlantDetails(
     @SerializedName("name_authority")
     val nameAuthority: String?,
     @SerializedName("taxonomy")
-    val taxonomy: RetrofitTaxonomy,
+    val taxonomy: RetrofitTaxonomy? = null,
     @SerializedName("url")
     val urls: RetrofitPlantUrls,
     @SerializedName("scientific_name")

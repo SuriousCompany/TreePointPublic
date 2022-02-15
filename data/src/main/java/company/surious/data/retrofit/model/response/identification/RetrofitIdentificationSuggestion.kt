@@ -13,5 +13,7 @@ data class RetrofitIdentificationSuggestion(
     @SerializedName("probability")
     val probability: Float,
     @SerializedName("confirmed")
-    val confirmed: Boolean
+    val confirmed: Boolean,
+    @SerializedName("similar_images")
+    val images: List<RetrofitIdentificationSuggestionImage>
 )

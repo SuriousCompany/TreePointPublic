@@ -8,6 +8,7 @@ abstract class ObservableViewModel<Request, Data : Any> : RefreshingViewModel<Re
     protected abstract val observableUseCase: ObservableUseCase<Request, Data>
     protected open var observingDisposable: Disposable? = null
 
+    @Suppress("SameParameterValue")
     protected open fun startObserving(argument: Request) {
         if (observingDisposable == null) {
             observingDisposable =

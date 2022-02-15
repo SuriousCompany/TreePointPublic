@@ -12,5 +12,5 @@ class GetAllTreePointsUseCase(
 ) : SingleUseCase<Void?, List<TreePoint>>() {
 
     override fun createSingle(params: Void?): Single<List<TreePoint>> =
-        treePointAssembler.assembleTreeTypes(treePointRepository.getAllTreePoints())
+        treePointAssembler.assemblePlantDetails(treePointRepository.getAllTreePoints())
 }

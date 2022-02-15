@@ -9,7 +9,7 @@ object FirestorePlantWikiDescriptionsMapper :
     override fun mapToEntity(model: FirestorePlantWikiDescriptions): PlantWikiDescriptions =
         model.run {
             PlantWikiDescriptions(
-                eu?.let { FirestorePlantWikiDescriptionMapper.mapToEntity(it) },
+                en?.let { FirestorePlantWikiDescriptionMapper.mapToEntity(it) },
                 ru?.let { FirestorePlantWikiDescriptionMapper.mapToEntity(it) },
                 uk?.let { FirestorePlantWikiDescriptionMapper.mapToEntity(it) }
             )
@@ -18,7 +18,7 @@ object FirestorePlantWikiDescriptionsMapper :
     override fun mapToDataModel(entity: PlantWikiDescriptions): FirestorePlantWikiDescriptions =
         entity.run {
             FirestorePlantWikiDescriptions(
-                eu?.let { FirestorePlantWikiDescriptionMapper.mapToDataModel(it) },
+                en?.let { FirestorePlantWikiDescriptionMapper.mapToDataModel(it) },
                 ru?.let { FirestorePlantWikiDescriptionMapper.mapToDataModel(it) },
                 uk?.let { FirestorePlantWikiDescriptionMapper.mapToDataModel(it) }
             )

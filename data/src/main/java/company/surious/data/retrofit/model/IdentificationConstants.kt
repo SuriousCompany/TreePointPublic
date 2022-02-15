@@ -1,5 +1,5 @@
 package company.surious.data.retrofit.model
 
 object IdentificationConstants {
-    val LANGUAGES = listOf("eu", "ru", "uk")
+    val LANGUAGES = listOf("en", "ru", "uk")
 }

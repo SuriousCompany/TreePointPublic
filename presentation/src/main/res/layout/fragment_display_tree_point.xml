@@ -23,16 +23,6 @@
         android:padding="16dp"
         tools:context=".ui.common.fragments.DisplayTreePointFragment">
 
-        <ImageView
-            android:id="@+id/displayTreeTypeIcon"
-            android:layout_width="@dimen/tree_type_icon_size"
-            android:layout_height="@dimen/tree_type_icon_size"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_apple"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/treeTypeTextView"
             android:layout_width="0dp"
@@ -41,12 +31,12 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@{treePoint.type.typeName}"
+            android:text="@{treePoint.plant.name}"
             android:textColor="@color/black"
             android:textSize="@dimen/tree_type_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/displayTreeTypeIcon"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Apple tree" />
 
         <TextView

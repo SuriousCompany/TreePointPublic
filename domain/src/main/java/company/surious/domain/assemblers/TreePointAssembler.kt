@@ -1,17 +1,17 @@
 package company.surious.domain.assemblers
 
+import company.surious.domain.entities.identification.result.details.PlantDetails
 import company.surious.domain.entities.plants.TreePoint
-import company.surious.domain.entities.plants.TreeType
 import company.surious.domain.errors.TreeError.NoItemInCollectionError
-import company.surious.domain.repositories.TreeTypeRepository
+import company.surious.domain.repositories.PlantDetailsRepository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class TreePointAssembler(private val treeTypeRepository: TreeTypeRepository) {
+class TreePointAssembler(private val plantDetailsRepository: PlantDetailsRepository) {
 
-    fun assembleTreeTypes(treePointsSource: Observable<List<TreePoint>>) =
-        treeTypeRepository.getAllTreeTypes()
+    fun assemblePlantDetails(treePointsSource: Observable<List<TreePoint>>) =
+        plantDetailsRepository.getAllPlantDetails()
             .subscribeOn(Schedulers.io())
             .flatMapObservable { treeTypes ->
                 treePointsSource.map {
@@ -21,8 +21,8 @@ class TreePointAssembler(private val treeTypeRepository: TreeTypeRepository) {
                 }
             }
 
-    fun assembleTreeTypes(treePointsSource: Single<List<TreePoint>>) =
-        treeTypeRepository.getAllTreeTypes()
+    fun assemblePlantDetails(treePointsSource: Single<List<TreePoint>>) =
+        plantDetailsRepository.getAllPlantDetails()
             .subscribeOn(Schedulers.io())
             .flatMap { treeTypes ->
                 treePointsSource.map { treePoints ->
@@ -34,29 +34,29 @@ class TreePointAssembler(private val treeTypeRepository: TreeTypeRepository) {
 
     fun assembleTreeType(treePointsSource: Observable<TreePoint>) =
         treePointsSource.flatMapSingle { treePoint ->
-            treeTypeRepository.getTreeType(treePoint.type.id)
+            plantDetailsRepository.getPlantDetailsById(treePoint.plant.gbifId)
                 .subscribeOn(Schedulers.io())
                 .map { type -> map(treePoint, type) }
         }
 
     fun assembleTreeType(treePointsSource: Single<TreePoint>) =
         treePointsSource.flatMap { treePoint ->
-            treeTypeRepository.getTreeType(treePoint.type.id)
+            plantDetailsRepository.getPlantDetailsById(treePoint.plant.gbifId)
                 .subscribeOn(Schedulers.io())
                 .map { type -> map(treePoint, type) }
         }
 
-    private fun map(treePoint: TreePoint, treeTypes: List<TreeType>): TreePoint {
-        val type = treeTypes.firstOrNull { it.id == treePoint.type.id }
+    private fun map(treePoint: TreePoint, plantDetails: List<PlantDetails>): TreePoint {
+        val type = plantDetails.firstOrNull { it.gbifId == treePoint.plant.gbifId }
         return map(treePoint, type)
     }
 
-    private fun map(treePoint: TreePoint, treeType: TreeType?): TreePoint {
-        return if (treeType != null) {
-            treePoint.type = treeType
+    private fun map(treePoint: TreePoint, plantDetails: PlantDetails?): TreePoint {
+        return if (plantDetails != null) {
+            treePoint.plant = plantDetails
             treePoint
         } else {
-            throw NoItemInCollectionError("TreeType", treePoint.type.id)
+            throw NoItemInCollectionError("PlantDetails", treePoint.plant.gbifId.toString())
         }
     }
 }

@@ -7,11 +7,11 @@ import company.surious.domain.entities.identification.result.details.PlantUrls
 object FirestorePlantUrlsMapper : Mapper<FirestorePlantUrls, PlantUrls> {
     override fun mapToEntity(model: FirestorePlantUrls): PlantUrls =
         model.run {
-            PlantUrls(eu, ru, uk, global)
+            PlantUrls(en, ru, uk, global)
         }
 
     override fun mapToDataModel(entity: PlantUrls): FirestorePlantUrls =
         entity.run {
-            FirestorePlantUrls(eu, ru, uk, global)
+            FirestorePlantUrls(en, ru, uk, global)
         }
 }

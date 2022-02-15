@@ -7,11 +7,11 @@ import company.surious.domain.entities.identification.result.details.PlantCommon
 object FirestorePlantCommonNamesMapper : Mapper<FirestorePlantCommonNames, PlantCommonNames> {
     override fun mapToDataModel(entity: PlantCommonNames): FirestorePlantCommonNames =
         entity.run {
-            FirestorePlantCommonNames(eu, ru, uk)
+            FirestorePlantCommonNames(en, ru, uk)
         }
 
     override fun mapToEntity(model: FirestorePlantCommonNames): PlantCommonNames =
         model.run {
-            PlantCommonNames(eu, ru, uk)
+            PlantCommonNames(en, ru, uk)
         }
 }

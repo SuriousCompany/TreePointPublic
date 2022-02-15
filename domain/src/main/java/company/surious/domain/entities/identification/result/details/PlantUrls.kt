@@ -1,3 +1,12 @@
 package company.surious.domain.entities.identification.result.details
 
-data class PlantUrls(val eu: String?, val ru: String?, val uk: String?, val global: String?)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class PlantUrls(
+    val en: String? = null,
+    val ru: String? = null,
+    val uk: String? = null,
+    val global: String? = null
+) : Parcelable

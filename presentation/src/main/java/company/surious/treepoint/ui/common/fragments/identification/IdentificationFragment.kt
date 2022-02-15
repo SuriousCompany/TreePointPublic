@@ -87,7 +87,7 @@ class IdentificationFragment : Fragment() {
             with(item.plantDetails.urls) {
                 WebViewActivity.start(
                     requireContext(),
-                    uk ?: ru ?: eu ?: "http://amishrakefight.org/gfy/"
+                    uk ?: ru ?: en ?: "http://amishrakefight.org/gfy/"
                 )
             }
         }

@@ -7,7 +7,7 @@ data class FirestorePlantDetails(
     val gbifId: Int = -1,
     val propagationMethods: List<String>? = null,
     val nameAuthority: String? = null,
-    val taxonomy: FirestoreTaxonomy,
+    val taxonomy: FirestoreTaxonomy? = null,
     val urls: FirestorePlantUrls = FirestorePlantUrls(),
     val scientificName: String = "",
     val structuredName: FirestorePlantStructuredName = FirestorePlantStructuredName()

@@ -12,6 +12,6 @@ class ObserveAllTreePointsUseCase(
 ) : ObservableUseCase<Void?, List<TreePoint>>() {
 
     override fun createObservable(params: Void?): Observable<List<TreePoint>> =
-        treePointAssembler.assembleTreeTypes(treePointRepository.observeAllTreePoints())
+        treePointAssembler.assemblePlantDetails(treePointRepository.observeAllTreePoints())
 
 }
