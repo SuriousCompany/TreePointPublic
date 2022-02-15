@@ -41,9 +41,9 @@ object DomainModules {
         factory { DownloadTreePointPhotosUseCase(get()) }
         //Identification:
         factory { GetUsageInfoUseCase(get()) }
-        factory { IdentifyUseCase(get()) }
+        factory { IdentifyUseCase(get(), get(), get()) }
         //Plant details
-        factory { SavePlantDetailsUseCase(get()) }
+        factory { SavePlantDetailsUseCase(get(), get(), get()) }
     }
 
     val ASSEMBLERS = module {

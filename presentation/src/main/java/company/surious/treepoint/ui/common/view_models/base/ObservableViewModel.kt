@@ -4,7 +4,7 @@ import company.surious.domain.logging.logUnhandledError
 import company.surious.domain.use_case.base.ObservableUseCase
 import io.reactivex.rxjava3.disposables.Disposable
 
-abstract class ObservableViewModel<Request, Data> : RefreshingViewModel<Request, Data>() {
+abstract class ObservableViewModel<Request, Data : Any> : RefreshingViewModel<Request, Data>() {
     protected abstract val observableUseCase: ObservableUseCase<Request, Data>
     protected open var observingDisposable: Disposable? = null
 

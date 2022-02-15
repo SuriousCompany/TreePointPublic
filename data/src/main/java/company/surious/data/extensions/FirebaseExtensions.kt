@@ -3,7 +3,7 @@ package company.surious.data.extensions
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
-import company.surious.domain.errors.NoFirestoreDocumentError
+import company.surious.domain.errors.TreeError.CommunicationError.FirestoreError.NoFirestoreDocumentError
 import company.surious.domain.extensions.safeOnComplete
 import company.surious.domain.extensions.safeOnError
 import company.surious.domain.extensions.safeOnNext
@@ -29,7 +29,9 @@ fun <T : Any> DocumentReference.getAsync(clazz: KClass<T>) = Single.create<T> { 
                 if (t != null) {
                     emitter.safeOnSuccess(t)
                 } else {
-                    emitter.safeOnError(NoFirestoreDocumentError(clazz.simpleName!!, id))
+                    emitter.safeOnError(
+                        NoFirestoreDocumentError(clazz.simpleName!!, id)
+                    )
                 }
             } catch (error: Throwable) {
                 emitter.safeOnError(error)

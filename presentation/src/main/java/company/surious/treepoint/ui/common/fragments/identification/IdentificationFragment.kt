@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import company.surious.domain.entities.identification.HealthAssessmentMode
 import company.surious.domain.entities.identification.result.IdentificationSuggestion
+import company.surious.treepoint.R
 import company.surious.treepoint.databinding.FragmentIdentificationBinding
 import company.surious.treepoint.ui.common.activities.WebViewActivity
 import company.surious.treepoint.ui.common.binding.lists.RecyclerViewEventHandler
@@ -53,15 +55,29 @@ class IdentificationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         identificationUsageInfoViewModel.refreshUsageInfo()
         observeIdentificationResult()
+        observeCredits()
     }
 
     private fun observeIdentificationResult() {
-        identificationViewModel.identificationResult.observe(viewLifecycleOwner, { result ->
+        identificationViewModel.identificationResult.observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 identificationUsageInfoViewModel.refreshUsageInfo()
                 suggestionsAdapter.setData(result.suggestions)
             }
-        })
+        }
+    }
+
+    private fun observeCredits() {
+        identificationViewModel.addedCreditsEvent.observe(viewLifecycleOwner) { event ->
+            val rootView = view
+            if (rootView != null) {
+                Snackbar.make(
+                    rootView,
+                    getString(R.string.got_credits, event.addedCredits, event.allCredits),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 
     inner class IdentificationFragmentEventHandler :

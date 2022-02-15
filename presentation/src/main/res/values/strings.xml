@@ -40,6 +40,7 @@
     <string name="always">Always</string>
     <string name="health_assessment_mode">Health assessment mode:</string>
     <string name="identify">identify</string>
+    <string name="got_credits">You got %.2f credits for the new plants discovering! Now you have %.2f credits.</string>
 
     <string-array name="months">
         <item>January</item>

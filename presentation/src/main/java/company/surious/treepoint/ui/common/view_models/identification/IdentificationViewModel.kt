@@ -10,6 +10,7 @@ import company.surious.domain.entities.identification.IdentificationRequest
 import company.surious.domain.entities.identification.result.IdentificationResult
 import company.surious.domain.entities.identification.result.IdentificationSuggestion
 import company.surious.domain.entities.identification.result.details.PlantDetails
+import company.surious.domain.entities.users.CreditsAddedEvent
 import company.surious.domain.extensions.safeOnError
 import company.surious.domain.extensions.safeOnSuccess
 import company.surious.domain.logging.logUnhandledError
@@ -27,8 +28,9 @@ class IdentificationViewModel(
     override var isLoadingByDefault: Boolean = false
 
     private val identificationSource = MutableLiveData<IdentificationResult>()
-    private val newDetailsSource = MutableLiveData<Int>()
+    private val addedCreditsSource = MutableLiveData<CreditsAddedEvent>()
 
+    val addedCreditsEvent = addedCreditsSource as LiveData<CreditsAddedEvent>
     val identificationResult = identificationSource as LiveData<IdentificationResult>
 
     fun identify(
@@ -74,12 +76,15 @@ class IdentificationViewModel(
 
     private fun savePlantDetails(details: List<PlantDetails>) {
         disposables.add(savePlantDetailsUseCase.execute(details).subscribe(
-            { newDetailsCount ->
+            { creditsAddedEvent ->
+                addedCreditsSource.value = creditsAddedEvent
                 isLoading.value = false
-                newDetailsSource.value = newDetailsCount
             },
             {
                 logUnhandledError(it, "saving plant details error")
+            },
+            {
+                isLoading.value = false
             }
         ))
     }

@@ -1,7 +1,7 @@
 package company.surious.treepoint.ui.common.view_models
 
 import androidx.lifecycle.MutableLiveData
-import company.surious.domain.errors.NotUniqueUsernameError
+import company.surious.domain.errors.TreeError.LogicError.NotUniqueUsernameError
 import company.surious.domain.logging.logFlow
 import company.surious.domain.use_case.auth.RegistrationUseCase
 import company.surious.domain.validators.UsernameValidator

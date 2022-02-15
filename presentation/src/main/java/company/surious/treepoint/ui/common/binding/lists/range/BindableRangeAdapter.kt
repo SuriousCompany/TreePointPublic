@@ -1,7 +1,7 @@
 package company.surious.treepoint.ui.common.binding.lists.range
 
 import androidx.databinding.ViewDataBinding
-import company.surious.domain.errors.UiError
+import company.surious.domain.errors.TreeError
 import company.surious.domain.logging.LogTags
 import company.surious.domain.logging.logVerbose
 import company.surious.treepoint.ui.common.binding.lists.BindableRecyclerAdapter
@@ -21,7 +21,7 @@ abstract class BindableRangeAdapter<Binding : ViewDataBinding, Item : Selectable
             if (value is RangeRecyclerViewEventHandler<Item>) {
                 field = value
             } else {
-                throw UiError(
+                throw TreeError.UiError(
                     null,
                     "Please use RangeRecyclerViewEventHandler with BindableRangeAdapter"
                 )

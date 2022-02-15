@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import company.surious.domain.logging.logUnhandledError
 import company.surious.domain.use_case.base.SingleUseCase
 
-abstract class RefreshingViewModel<Request, Data> : LoadingViewModel() {
+abstract class RefreshingViewModel<Request, Data : Any> : LoadingViewModel() {
     protected abstract val refreshingUseCase: SingleUseCase<Request, Data>
 
     protected open val dataSource by lazy { createDataSource() }

@@ -2,7 +2,7 @@ package company.surious.domain.assemblers
 
 import company.surious.domain.entities.plants.TreePoint
 import company.surious.domain.entities.plants.TreeType
-import company.surious.domain.errors.NoItemInCollectionError
+import company.surious.domain.errors.TreeError.NoItemInCollectionError
 import company.surious.domain.repositories.TreeTypeRepository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single

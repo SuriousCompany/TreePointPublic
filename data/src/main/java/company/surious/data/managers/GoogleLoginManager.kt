@@ -10,7 +10,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import company.surious.data.extensions.signOutAsync
 import company.surious.data.firestore.mappers.FirestoreLoggedInUserMapper
 import company.surious.domain.entities.users.LoggedInUser
-import company.surious.domain.errors.LoginError
+import company.surious.domain.errors.TreeError.CommunicationError.LoginError
 import company.surious.domain.extensions.mapErrors
 import company.surious.domain.extensions.safeOnError
 import company.surious.domain.extensions.safeOnSuccess

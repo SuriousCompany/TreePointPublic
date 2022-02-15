@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import company.surious.domain.errors.UiError
+import company.surious.domain.errors.TreeError
 
 @Suppress("UNCHECKED_CAST")
 @BindingAdapter(
@@ -22,7 +22,7 @@ fun <T : Any> bindRecyclerData(
 ) {
     view.adapter = adapter
     view.layoutManager = layoutManager
-    val lifecycleOwner = view.findViewTreeLifecycleOwner() ?: throw(UiError(
+    val lifecycleOwner = view.findViewTreeLifecycleOwner() ?: throw(TreeError.UiError(
         null,
         "No lifecycle owner for this RecyclerView"
     ))

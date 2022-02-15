@@ -3,8 +3,8 @@ package company.surious.data.firestore
 import com.google.firebase.firestore.FirebaseFirestore
 import company.surious.data.extensions.*
 import company.surious.data.firestore.mappers.Mapper
-import company.surious.domain.errors.DetailedFirestoreError
-import company.surious.domain.errors.FirestoreError
+import company.surious.domain.errors.TreeError.CommunicationError.DetailedFirestoreError
+import company.surious.domain.errors.TreeError.CommunicationError.FirestoreError
 import company.surious.domain.extensions.mapErrors
 import company.surious.domain.types.Identifiable
 import io.reactivex.rxjava3.core.Completable
@@ -79,10 +79,7 @@ abstract class SimpleCollectionRepository<FirestoreModel : Any, Entity : Identif
             .map { list -> list.map(mapper::mapToEntity) }
             .mapErrors { error -> mapFirestoreDetailedError(error, "get all") }
 
-    private fun mapFirestoreDetailedError(
-        mainError: Throwable,
-        documentId: String
-    ) =
+    private fun mapFirestoreDetailedError(mainError: Throwable, documentId: String) =
         if (mainError is FirestoreError) {
             mainError
         } else {
